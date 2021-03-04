@@ -1,4 +1,4 @@
-# Meme_Stonks
+# Slam_Stonks
 
 Shourav Ahmed
 
