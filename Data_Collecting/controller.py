@@ -1,31 +1,36 @@
-import time
-import scraper as scr
-import market_stock_info as msi
-import social_stock_info as ssi
-import analyzer
-import store_guy
+from time import sleep
+from scraper import scraper
+from analyzer import analyze
+from store_guy import store_stock, store_tickers
 
 
 def controller():
+    # scrape data from watchmaker
+    tickers_list = scraper()
+    ordered_list = []
+
+    for curr_ticker in tickers_list:
+        refined_stock_data = analyze(curr_ticker)
+        ordered_list.append(refined_stock_data)
+        store_stock(refined_stock_data)
+
+    # sort according ordered_list according to its value
+    ordered_list.sort(key=compare_stocks)
+    # store list of tickers in DB
+    store_tickers(ordered_list)
+
+
+def compare_stocks(stock1, stock2) -> int:
+    # returns 0, 1 or -1
+    return 0
+
+
+def looper():
     while True:
-        # scrape data from watchmaker
-        tickers_list = scr.scraper()
-        ordered_list = []
-
-        for curr_ticker in tickers_list:
-            market_info = msi.get_market_stock_info(curr_ticker)
-            social_info = ssi.get_social_stock_info(curr_ticker)
-            refined_stock_data = analyzer.analyze(market_info, social_info)
-            ordered_list.append((curr_ticker, refined_stock_data.value))
-            store_guy.store_stock(refined_stock_data)
-
-        # sort according ordered_list according to its value
-        # store list of tickers in DB
-        store_guy.store_tickers(ordered_list)
-
+        controller()
         # sleep for 60 seconds * 5
-        time.sleep(60 * 5)
+        sleep(60 * 5)
 
 
-if __name__ == '__main__':
-    controller()
+# if __name__ == '__main__':
+#    looper()

@@ -3,12 +3,13 @@
 # Pardon my formatting: I'm new to Python and it's expectations :D
 # THERE IS ALMOST NO ERROR CHECKING/HANDLING!!!
 
-import requests             # pulls html
-import re                   # regular expressions
+from requests import get                # pulls html
+from re import search                   # regular expressions
+
 
 def scraper():
     # requests will use .get() to pull from marketwatch.com
-    r = requests.get('http://www.marketwatch.com/tools/screener/short-interest')
+    r = get('http://www.marketwatch.com/tools/screener/short-interest')
     # r.raise_for_status() # will return error if http isn't up
 
     # saving scraped data into a local file
@@ -23,10 +24,10 @@ def scraper():
         counter = 0  # will be used to jump out of the loop early
 
         while current_line and counter < 10:
-            none_or_match = re.search("<div class=\"cell__content\">[A-Z]{3,5}</div>", current_line)
+            none_or_match = search("<div class=\"cell__content\">[A-Z]{3,5}</div>", current_line)
 
             if none_or_match is not None:
-                temp_string = re.search("[A-Z]{3,5}", none_or_match.group(0))  # pulls string from match object
+                temp_string = search("[A-Z]{3,5}", none_or_match.group(0))  # pulls string from match object
                 top_10_stocks.append(temp_string.group(0))
                 counter += 1
 

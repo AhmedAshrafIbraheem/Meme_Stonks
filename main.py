@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from gevent.pywsgi import WSGIServer
-from models import get_analysis
+from models import get_analysis, get_ticker_data
 import os
 
 app = Flask(__name__)
@@ -26,7 +26,13 @@ def internal_server_error(error):
 @app.route('/', methods=['GET'])
 def index():
     data = get_analysis()
-    return render_template('base.html', title="Welcome", data=data)
+    return render_template('index.html', title="Welcome", data=data)
+
+
+@app.route('/data/<string:ticker>', methods=['GET'])
+def ticker_data(ticker: str):
+    data = get_ticker_data(ticker)
+    return render_template('ticker_data.html', title=ticker, data=data)
 
 
 if __name__ == '__main__':
