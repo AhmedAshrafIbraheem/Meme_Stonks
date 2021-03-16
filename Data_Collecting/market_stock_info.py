@@ -17,10 +17,12 @@ class Ticker:
         response = get(url)
         info = response.json()
 
-        series = info['Time Series (1min)']
+        intraday = info['Time Series (1min)']
 
-        for key, value in series.items():
-            print(f'{key} -- {value}')
+        return intraday
+
+        # for key, value in series.items():
+        #     print(f'{key} -- {value}')
 
     # @Param: None
     # API call that fetches the Daily Open High Low Close and Volume for a given Ticker
@@ -30,10 +32,12 @@ class Ticker:
         response = get(url)
         info = response.json()
 
-        series = info['Time Series (Daily)']
+        daily = info['Time Series (Daily)']
 
-        for key, value in series.items():
-            print(f'{key} -- {value}')
+        return daily
+
+        # for key, value in series.items():
+        #     print(f'{key} -- {value}')
 
     # @Param: None
     # API call that fetches the fundamental details/company overview for a given Ticker
@@ -41,10 +45,12 @@ class Ticker:
     def Overview(self):
         url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={self.symbol}&apikey=75NGNLOY2P6P3HT4'
         response = get(url)
-        info = response.json()
+        overview = response.json()
 
-        for key, value in info.items():
-            print(f'{key} -- {value}')
+        return overview
+
+        # for key, value in overview.items():
+        #     print(f'{key} -- {value}')
 
     # @Param: None
     # API call that fetches a quote for a given Ticker from the most recent trading day
@@ -55,10 +61,11 @@ class Ticker:
         info = response.json()
 
         Quote = info['Global Quote']
-        print(Quote.keys())
 
-        for key, value in Quote.items():
-            print(f'{key} -- {value}')
+        return Quote
+
+        # for key, value in Quote.items():
+        #     print(f'{key} -- {value}')
 
 
 #A test function to test the functions inside the Ticker class
