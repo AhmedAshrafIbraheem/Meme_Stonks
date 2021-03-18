@@ -1,7 +1,8 @@
 from time import sleep
 from scraper import scraper
 from analyzer import analyze
-from store_guy import store_stock, store_tickers
+from store_guy import DatabaseInteraction
+from stock_class import compare_stocks
 
 
 def controller():
@@ -12,17 +13,12 @@ def controller():
     for curr_ticker in tickers_list:
         refined_stock_data = analyze(curr_ticker)
         ordered_list.append(refined_stock_data)
-        store_stock(refined_stock_data)
+        DatabaseInteraction.get_instance().store_stock(refined_stock_data)
 
     # sort according ordered_list according to its value
     ordered_list.sort(key=compare_stocks)
     # store list of tickers in DB
-    store_tickers(ordered_list)
-
-
-def compare_stocks(stock1, stock2) -> int:
-    # returns 0, 1 or -1
-    return 0
+    DatabaseInteraction.get_instance().store_top10s(ordered_list)
 
 
 def looper():
@@ -32,5 +28,5 @@ def looper():
         sleep(60 * 5)
 
 
-# if __name__ == '__main__':
-#    looper()
+if __name__ == '__main__':
+    looper()

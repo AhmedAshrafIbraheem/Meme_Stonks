@@ -27,13 +27,13 @@
               {% for ticker in data %}
                     <tr>
                       <td>
-                          <a style="color:green" href="{{ url_for('ticker_data', ticker=ticker.symbol) }}">
-                              <strong>{{ticker.symbol}}</strong></a>
+                          <a style="color:green" href="{{ url_for('ticker_data', ticker=ticker[0]) }}">
+                              <strong>{{ticker[0]}}</strong></a>
                       </td>
-                      <td>{{ticker.company_name}}</td>
-                      <td>{{ticker.price}}</td>
-                      <td>{{ticker.short_interest}}</td>
-                      <td>{{ticker.float_shorted}}%</td>
+                      <td>{{ticker[1]}}</td>
+                      <td>{{ticker[2]}}</td>
+                      <td>{{ticker[3]}}</td>
+                      <td>{{ticker[4]}}%</td>
                     </tr>
               {% endfor %}
               </tbody>
