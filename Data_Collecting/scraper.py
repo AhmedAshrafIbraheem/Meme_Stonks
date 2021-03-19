@@ -7,6 +7,8 @@ from requests import get                # pulls html
 from re import search                   # regular expressions
 
 
+# TODO: Alex, scrape also the company name, short interest, float shorted and return it as a
+#  list of lists like [ [GME, Game .., 2323232, 56.34], [] ]
 def scraper():
     # requests will use .get() to pull from marketwatch.com
     r = get('http://www.marketwatch.com/tools/screener/short-interest')

@@ -7,11 +7,14 @@ def compare_stocks(stock1, stock2) -> int:
 class StockData:
 
     def __init__(self, info: {}):
-        self.symbol = info["Symbol"]
-        self.company_name = info["Company Name"]
-        self.price = info["Price"]
-        self.short_interest = info["Short Interest"]
-        self.float_shorted = info["Float Shorted"]
+        self.info = info
 
     def get_home_page_info(self):
-        return [self.symbol, self.company_name, self.price, self.short_interest, self.float_shorted]
+        return [self.info["Symbol"], self.info["Name"], self.info["Price"],
+                self.info["Short Interest"], self.info["Float Shorted"]]
+
+    def get_all(self):
+        return self.info
+
+    def get_ticker(self):
+        return self.info["Symbol"]

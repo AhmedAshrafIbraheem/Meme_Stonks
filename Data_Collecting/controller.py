@@ -5,9 +5,7 @@ from store_guy import DatabaseInteraction
 from stock_class import compare_stocks
 
 
-def controller():
-    # scrape data from watchmaker
-    tickers_list = scraper()
+def controller(tickers_list):
     ordered_list = []
 
     for curr_ticker in tickers_list:
@@ -22,11 +20,18 @@ def controller():
 
 
 def looper():
+    tickers_list = scraper()
+    counter = 0
     while True:
-        controller()
-        # sleep for 60 seconds * 5
-        sleep(60 * 5)
+        counter = (counter + 1) % 10
+        if counter == 0:
+            tickers_list = scraper()
+
+        controller(tickers_list)
+
+        # sleep for 60 seconds
+        sleep(60)
 
 
-if __name__ == '__main__':
-    looper()
+# if __name__ == '__main__':
+#     looper()

@@ -31,6 +31,7 @@ def index():
 
 @app.route('/data/<string:ticker>', methods=['GET'])
 def ticker_data(ticker: str):
+    ticker = ticker.upper()
     data = get_ticker_data(ticker)
     return render_template('ticker_data.html', title=ticker, data=data)
 
