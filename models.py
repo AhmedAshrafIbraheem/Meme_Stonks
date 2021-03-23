@@ -22,4 +22,12 @@ def get_ticker_data(ticker):
     my_client.server_info()
     stocks = col_stocks.find_one({"_id": ticker})
     my_client.close()
-    return stocks if stocks else None
+    return StockInfo(stocks["Data"]) if stocks else None
+
+
+class StockInfo:
+
+    def __init__(self, info):
+        self.symbol = info['Symbol']
+        self.comp = info['overview']['Name']
+        self.chart = info['intraday']

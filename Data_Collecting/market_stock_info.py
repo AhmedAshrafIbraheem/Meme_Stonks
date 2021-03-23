@@ -8,6 +8,7 @@ def grab_stock_info(ticker):
     daily = Daily(ticker)
     overview = Overview(ticker)
 
+    info['Symbol'] = overview['Symbol']
     info['intraday'] = intraday
     info['daily'] = daily
     info['overview'] = overview
