@@ -50,8 +50,10 @@ class DatabaseInteraction:
 
     def store_stock(self, stock_data: StockData):
         self.stocks.find_one_and_delete({"_id": stock_data.get_ticker()})
+        # self.stocks.insert_one({"_id": stock_data.get_ticker(),
+        #                         "Data": self._remove_dots(stock_data.get_all())})
         self.stocks.insert_one({"_id": stock_data.get_ticker(),
-                                "Data": self._remove_dots(stock_data.get_all())})
+                                "Data": stock_data.get_all()})
         print("{} is written".format(stock_data.get_ticker()))
 
     def _remove_dots(self, d: dict):
