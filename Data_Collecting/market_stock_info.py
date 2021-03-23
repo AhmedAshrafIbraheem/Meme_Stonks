@@ -1,14 +1,13 @@
 from requests import get
 
 
-# TODO: call all functions together and append it to one dictionary
 def grab_stock_info(ticker):
     info = dict()
     intraday = Intraday(ticker)
     daily = Daily(ticker)
     overview = Overview(ticker)
 
-    info['Symbol'] = overview['Symbol']
+    info['Symbol'] = ticker
     info['intraday'] = intraday
     info['daily'] = daily
     info['overview'] = overview
@@ -18,13 +17,11 @@ def grab_stock_info(ticker):
     # for key, value in info.items():
     #     print(f'{key} -- {value}')
 
-
-
-
     # info = {"price": 23}
     # kol = {"volume": 43}
     # info.update(kol)
     # info {"price": 23, "volume": 43}
+
 
 # # @Param: None
 # # API call that fetches the intraday(1 Min, 5 Min, 15 Min, 30 Min, 60 Min) Open High Low Close and
@@ -34,13 +31,17 @@ def Intraday(ticker):
     url = f'https://api.marketstack.com/v1/intraday?access_key=61578059aad857bacd9150dc716b8c82&symbols={ticker}&interval=1min'
     response = get(url)
     info = response.json()
+
+    if 'data' not in info:
+        return None
+
     data = info['data']
     time = []
 
     for i in range(len(data)):
         time.append(data[i]['date'])
 
-    intraday = dict(zip(time,data))
+    intraday = dict(zip(time, data))
 
     return intraday
 
@@ -55,6 +56,10 @@ def Daily(ticker):
     url = f'https://api.marketstack.com/v1/eod?access_key=61578059aad857bacd9150dc716b8c82&symbols={ticker}'
     response = get(url)
     info = response.json()
+
+    if 'data' not in info:
+        return None
+
     data = info['data']
     time = []
 
@@ -78,6 +83,9 @@ def Overview(ticker):
     response = get(url)
     overview = response.json()
 
+    if 'Symbol' not in overview:
+        return None
+
     return overview
 
     # for key, value in overview.items():
@@ -96,5 +104,5 @@ def Overview(ticker):
 #     # RealTimeData('AAPL')
 
 
-if __name__ == '__main__':
-    grab_stock_info('AAPL')
+# if __name__ == '__main__':
+#     grab_stock_info('AAPL')

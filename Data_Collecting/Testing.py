@@ -2,6 +2,7 @@ from stock_class import StockData
 from store_guy import DatabaseInteraction
 from market_stock_info import grab_stock_info
 
+
 def writer1():
     data = [{"Symbol": "GME", "Name": "Game Stop Corp.", "Price": 50000, "Short Interest": 2309662, "Float Shorted": 54.44},
             {"Symbol": "NOK", "Name": "Nokia Corp.", "Price": 3.86, "Short Interest": 623316, "Float Shorted": 52.73},
@@ -46,6 +47,5 @@ def testing():
             print("Wrong Input")
 
 
-if __name__ == '__main__':
-     testing()
-
+# if __name__ == '__main__':
+#       testing()
