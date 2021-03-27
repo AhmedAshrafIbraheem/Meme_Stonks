@@ -1,6 +1,6 @@
 from stock_class import StockData
 from store_guy import DatabaseInteraction
-from requests import get
+from market_stock_info import grab_stock_info
 
 
 def writer1():
@@ -24,9 +24,7 @@ def writer1():
 
 def writer2():
     ticker = input('Enter ticker: ')
-    url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker}&apikey=75NGNLOY2P6P3HT4'
-    response = get(url)
-    overview = response.json()
+    overview = grab_stock_info(ticker)
     DatabaseInteraction.get_instance().store_stock(StockData(overview))
 
 
@@ -50,4 +48,4 @@ def testing():
 
 
 # if __name__ == '__main__':
-#     testing()
+#       testing()

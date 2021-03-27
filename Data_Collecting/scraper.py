@@ -1,7 +1,6 @@
-# SlamStonks
-# initial practice with requests and didn't end up using beautifulsoup
-# Pardon my formatting: I'm new to Python and it's expectations :D
-# THERE IS ALMOST NO ERROR CHECKING/HANDLING!!!
+# SlamStonks: scraper.py
+# returns a list of lists after scraping data from www.marketwatch.com/tools/screener/short-interest
+# NEEDS: error checking
 
 from requests import get                # pulls html
 from re import search                   # regular expressions
@@ -11,29 +10,46 @@ from re import search                   # regular expressions
 #  list of lists like [ [GME, Game .., 2323232, 56.34], [] ]
 def scraper():
     # requests will use .get() to pull from marketwatch.com
-    r = get('http://www.marketwatch.com/tools/screener/short-interest')
+    requests_get_short_html = get('http://www.marketwatch.com/tools/screener/short-interest')
     # r.raise_for_status() # will return error if http isn't up
 
-    # saving scraped data into a local file
-    open('market_watch_scrape.html', 'wb').write(r.content)
+    newline_delimited = requests_get_short_html.text.split('\n')
+    top_10_stocks = []
 
-    top_10_stocks = []  # keeping out of with's scope below
+    # the content we want starts a bit after line 675:
+    i = 675;
+    counter = 0
+    while i < len(newline_delimited) and counter < 10:
+        none_or_match = search("<div class=\"cell__content\">[A-Z]{3,5}</div>", newline_delimited[i])
 
-    # opening file read-only mode and move through it line by line
-    with open("market_watch_scrape.html", "rt") as saved_file:
-        current_line = saved_file.readline()
+        if none_or_match is not None:
+            one_stock_list = []
+            # grabs ticker:
+            temp_string = search(".*>(.*)<.*", none_or_match.group(0))  # pulls substring from match object
+            one_stock_list.append(temp_string.group(1))
+            # grabs company name
+            i += 3
+            temp_string = search(".*>(.*)<.*", newline_delimited[i])
+            one_stock_list.append(temp_string.group(1))
+            # grabs price:
+            i += 3
+            temp_string = search(".*>(.*)<.*", newline_delimited[i])
+            one_stock_list.append(temp_string.group(1))
+            # grabs short interest
+            i += 8
+            temp_string = search(".*>(.*)<.*", newline_delimited[i])
+            one_stock_list.append(temp_string.group(1))
+            # grabs float shorted
+            i += 9
+            temp_string = search(".*>(.*)<.*", newline_delimited[i])
+            one_stock_list.append(temp_string.group(1))
 
-        counter = 0  # will be used to jump out of the loop early
+            top_10_stocks.append(one_stock_list)
+            counter += 1
+            # end if
 
-        while current_line and counter < 10:
-            none_or_match = search("<div class=\"cell__content\">[A-Z]{3,5}</div>", current_line)
-
-            if none_or_match is not None:
-                temp_string = search("[A-Z]{3,5}", none_or_match.group(0))  # pulls string from match object
-                top_10_stocks.append(temp_string.group(0))
-                counter += 1
-
-            current_line = saved_file.readline()
+        i += 1
+        # end while
 
     return top_10_stocks
 # END scraper.py
