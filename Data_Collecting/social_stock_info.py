@@ -63,8 +63,8 @@ def google_trends():
                 temp_dictionary.update({current_date: counter / counter_for_avg})
                 nested_dictionary_return.update({x: temp_dictionary})
 
-        print(nested_dictionary_return)
-        time.sleep(1)       # No reason to rush google!
+        # print(nested_dictionary_return)
+        # time.sleep(1)       # No reason to rush google!
 
     return nested_dictionary_return
 # END google_trends
