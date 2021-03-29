@@ -39,9 +39,9 @@ def google_trends():
         # prepping variables for the coming while loop that uses them. We need to get the current_date before we can
         # cycle through the dictionary. current_date is critical to successful execution.
         ticker_only_dictionary = interest_over_time_df.to_dict().get(x) # grabs the ticker dictionary from the dataframe
-        ###
-        print(interest_over_time_df.to_string())
-        ###
+        # ###
+        # print(interest_over_time_df.to_string())
+        # ###
         temp_dictionary = {}        # loads nested_dictionary_return when full and empties for next ticker
         popping_from_ticker = ticker_only_dictionary.popitem()      # pops a tuple from into the var
         current_date = popping_from_ticker[0].strftime("%Y-%m-%d")      # string
