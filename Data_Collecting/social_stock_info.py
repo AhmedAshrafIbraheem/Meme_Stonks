@@ -54,7 +54,7 @@ def google_trends():
                 counter_for_avg += 1
                 counter += popping_from_ticker[1]
             if temp_current_date != current_date:
-                print(str(counter) + " " + str(counter_for_avg) + " ")
+                #Sprint(str(counter) + " " + str(counter_for_avg) + " ")
                 temp_dictionary.update({current_date: counter / counter_for_avg})
                 current_date = temp_current_date
                 counter = popping_from_ticker[1]
