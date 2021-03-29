@@ -39,24 +39,31 @@ def google_trends():
         # prepping variables for the coming while loop that uses them. We need to get the current_date before we can
         # cycle through the dictionary. current_date is critical to successful execution.
         ticker_only_dictionary = interest_over_time_df.to_dict().get(x) # grabs the ticker dictionary from the dataframe
+        ###
+        print(interest_over_time_df.to_string())
+        ###
         temp_dictionary = {}        # loads nested_dictionary_return when full and empties for next ticker
         popping_from_ticker = ticker_only_dictionary.popitem()      # pops a tuple from into the var
         current_date = popping_from_ticker[0].strftime("%Y-%m-%d")      # string
         counter = popping_from_ticker[1]        # int
+        counter_for_avg = 1
         while(len(ticker_only_dictionary) > 0):
             popping_from_ticker = ticker_only_dictionary.popitem()
             temp_current_date = popping_from_ticker[0].strftime("%Y-%m-%d")
             if temp_current_date == current_date:
+                counter_for_avg += 1
                 counter += popping_from_ticker[1]
             if temp_current_date != current_date:
-                temp_dictionary.update({current_date: counter})
+                print(str(counter) + " " + str(counter_for_avg) + " ")
+                temp_dictionary.update({current_date: counter / counter_for_avg})
                 current_date = temp_current_date
-                counter = 0
+                counter = popping_from_ticker[1]
+                counter_for_avg = 1
             if len(ticker_only_dictionary) == 0:
-                temp_dictionary.update({current_date: counter})
+                temp_dictionary.update({current_date: counter / counter_for_avg})
                 nested_dictionary_return.update({x: temp_dictionary})
 
-        #print(nested_dictionary_return)
+        print(nested_dictionary_return)
         time.sleep(1)       # No reason to rush google!
 
     return nested_dictionary_return
