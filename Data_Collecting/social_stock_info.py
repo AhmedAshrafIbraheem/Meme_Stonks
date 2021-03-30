@@ -2,7 +2,6 @@ from requests import get
 import tweepy
 import re
 import pandas as pd
-import time
 from pytrends.request import TrendReq
 
 # THE CODE TO DO THIS IS NOT DONE YET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -13,11 +12,11 @@ top_10_stocks = ["LAZR", "KMPH", "TMBR", "EYES", "FBRX", "ROOT", "OTRK", "HJLI",
 ############################################################
 # should be run once every 10 minutes (same time as marketwatch scraper)...
 ### GOOGLE TRENDS ##########################################
-# pytrends, pandas (dataframe, timeframe), time
+# pytrends, pandas (dataframe, timeframe)
 # returns a nested dictionary containing tickers and their
 # individual trending percentages for the last seven days
 # (including today)
-def google_trends():
+def google_trends(ticker):
     # Only need to load this one time for following operations:
     pytrends = TrendReq()
 
@@ -26,47 +25,41 @@ def google_trends():
     # today_searches_df = pytrends.today_searches()
     # print(today_searches_df.to_string())
 
-    nested_dictionary_return = {}
+    kw_list = [ticker]
+    # check pytrends documentation as well as the embedded code snippet from
+    # trends.google.com to find proper pararmeters/formatting
+    pytrends.build_payload(kw_list, cat=0, timeframe='now 7-d', geo='US', gprop='')
+    interest_over_time_df = pytrends.interest_over_time()
+    #print(interest_over_time_df.head())        # useful for error testing
 
-    for x in top_10_stocks:
-        kw_list = [x]
-        # check pytrends documentation as well as the embedded code snippet from
-        # trends.google.com to find proper pararmeters/formatting
-        pytrends.build_payload(kw_list, cat=0, timeframe='now 7-d', geo='US', gprop='')
-        interest_over_time_df = pytrends.interest_over_time()
-        #print(interest_over_time_df.head())        # useful for error testing
+    # prepping variables for the coming while loop that uses them. We need to get the current_date before we can
+    # cycle through the dictionary. current_date is critical to successful execution.
+    ticker_only_dictionary = interest_over_time_df.to_dict().get(ticker) # grabs the ticker dictionary from the dataframe
+    # ###
+    # print(interest_over_time_df.to_string())
+    # ###
+    dictionary_to_return = {}        # loads nested_dictionary_return when full and empties for next ticker
+    popping_from_ticker = ticker_only_dictionary.popitem()      # pops a tuple from into the var
+    current_date = popping_from_ticker[0].strftime("%Y-%m-%d")      # string
+    counter = popping_from_ticker[1]        # int
+    counter_for_avg = 1
+    while(len(ticker_only_dictionary) > 0):
+        popping_from_ticker = ticker_only_dictionary.popitem()
+        temp_current_date = popping_from_ticker[0].strftime("%Y-%m-%d")
+        if temp_current_date == current_date:
+            counter_for_avg += 1
+            counter += popping_from_ticker[1]
+        if temp_current_date != current_date:
+            dictionary_to_return.update({current_date: counter / counter_for_avg})
+            current_date = temp_current_date
+            counter = popping_from_ticker[1]
+            counter_for_avg = 1
+        if len(ticker_only_dictionary) == 0:
+            dictionary_to_return.update({current_date: counter / counter_for_avg})
 
-        # prepping variables for the coming while loop that uses them. We need to get the current_date before we can
-        # cycle through the dictionary. current_date is critical to successful execution.
-        ticker_only_dictionary = interest_over_time_df.to_dict().get(x) # grabs the ticker dictionary from the dataframe
-        # ###
-        # print(interest_over_time_df.to_string())
-        # ###
-        temp_dictionary = {}        # loads nested_dictionary_return when full and empties for next ticker
-        popping_from_ticker = ticker_only_dictionary.popitem()      # pops a tuple from into the var
-        current_date = popping_from_ticker[0].strftime("%Y-%m-%d")      # string
-        counter = popping_from_ticker[1]        # int
-        counter_for_avg = 1
-        while(len(ticker_only_dictionary) > 0):
-            popping_from_ticker = ticker_only_dictionary.popitem()
-            temp_current_date = popping_from_ticker[0].strftime("%Y-%m-%d")
-            if temp_current_date == current_date:
-                counter_for_avg += 1
-                counter += popping_from_ticker[1]
-            if temp_current_date != current_date:
-                #Sprint(str(counter) + " " + str(counter_for_avg) + " ")
-                temp_dictionary.update({current_date: counter / counter_for_avg})
-                current_date = temp_current_date
-                counter = popping_from_ticker[1]
-                counter_for_avg = 1
-            if len(ticker_only_dictionary) == 0:
-                temp_dictionary.update({current_date: counter / counter_for_avg})
-                nested_dictionary_return.update({x: temp_dictionary})
+    # print(dictionary_to_return)
 
-        # print(nested_dictionary_return)
-        # time.sleep(1)       # No reason to rush google!
-
-    return nested_dictionary_return
+    return dictionary_to_return
 # END google_trends
 
 
@@ -129,8 +122,8 @@ def print_hi(name):
 
 
 # Press the green button in the gutter to run the script.
-#if __name__ == '__main__':
-    #print(google_trends())
+if __name__ == '__main__':
+    print(google_trends("LAZR"))
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 # END social_stock_info.py
