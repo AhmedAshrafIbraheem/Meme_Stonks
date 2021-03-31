@@ -132,6 +132,11 @@ def google_trends_normalized(top_10_stocks):
 
     nested_dictionary.pop(tickers_plus_normalizers_list[7])
     nested_dictionary.pop(tickers_plus_normalizers_list[11])
+    remove_the_digit = tickers_plus_normalizers_list[3][:-1]
+    temp_dictionary = {remove_the_digit: nested_dictionary[tickers_plus_normalizers_list[3]]}
+    nested_dictionary.update(temp_dictionary)
+    nested_dictionary.pop(tickers_plus_normalizers_list[3])
+    del temp_dictionary
 
     #print(nested_dictionary)
 
