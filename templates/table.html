@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>SLAM STONKS</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- Linking Skeleton framework
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/skeleton.css">
+
+
+</head>
+
+<style>
+
+
+    {#Margin on top#}
+    body {
+
+        background-color: silver;
+    }
+
+
+    .content-table {
+        border-bottom:thick solid;
+        border-top:thick solid;
+        border-left:thick solid;
+        border-right:thick solid;
+        border-color: #277A2B;
+        margin-top: 30px;
+        box-shadow: 0 0 20px rgba(162, 8, 8, 0.5);
+
+
+    }
+
+    .content-table thead tr{
+
+        font-family: Impact, Charcoal, sans-serif;
+        font-size: 25px;
+        color: white;
+        font-weight: normal;
+        text-decoration: none solid rgb(68, 68, 68);
+        text-transform: uppercase;
+        background-color: #277A2B;
+        text-align: center;
+        letter-spacing: 0.8px;
+
+    }
+
+    .content-table th,
+    .content-table td {
+        padding-left: 40px;
+        padding-right: 40px;
+
+    }
+    .content-table tbody tr{
+        background-color: whitesmoke;
+    }
+    .content-table tbody tr:nth-of-type(even){
+        color: #277A2B;
+    }
+
+    .content-table tbody tr:nth-of-type(odd){
+        color: lightcoral;
+    }
+
+
+    .contrast-background{
+        background-color: black;
+    }
+
+    p {
+        font-family: Impact, Charcoal, sans-serif;
+        font-size: 50px;
+        color: #277A2B;
+        margin-left: 50px;
+        text-decoration: underline solid rgb(68, 68, 68);
+    }
+
+    .button {
+        color: #FFF;
+        background-color: #277A2B;
+        border-color: black;
+        font-size: 15px;
+    }
+
+
+
+
+</style>
+
+<body>
+
+
+<div class="contrast-background">
+    <br>
+    <p> TOP TEN SHORTED STOCK WATCHLIST</p>
+
+    <div class="container">
+        <div class="row">
+            <div class="Ten columns">
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Company Name</th>
+                            <th>Price</th>
+                            <th>Float Shorted</th>
+                            <th>Short Interest</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_1_ticker }}.html" class="button">{{ stock_1_ticker }}</a></td>
+                    		<td>{{ stock_1_name }}</td>
+                    		<td>${{stock_1_price}}</td>
+                    		<td>{{ stock_1_float_shorted }}%</td>
+                    		<td>{{ stock_1_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                     		<td><a href="/stock/{{ stock_2_ticker }}.html" class="button">{{ stock_2_ticker }}</a></td>
+                    		<td>{{ stock_2_name }}</td>
+                    		<td>${{stock_2_price}}</td>
+                    		<td>{{ stock_2_float_shorted }}%</td>
+                    		<td>{{ stock_2_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_3_ticker }}.html" class="button">{{ stock_3_ticker }}</a></td>
+                    		<td>{{ stock_3_name }}</td>
+                    		<td>${{stock_3_price}}</td>
+                    		<td>{{ stock_3_float_shorted }}%</td>
+                    		<td>{{ stock_3_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_4_ticker }}.html" class="button">{{ stock_4_ticker }}</a></td>
+                    		<td>{{ stock_4_name }}</td>
+                    		<td>${{stock_4_price}}</td>
+                    		<td>{{ stock_4_float_shorted }}%</td>
+                    		<td>{{ stock_4_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_5_ticker }}.html" class="button">{{ stock_5_ticker }}</a></td>
+                    		<td>{{ stock_5_name }}</td>
+                    		<td>${{stock_5_price}}</td>
+                    		<td>{{ stock_5_float_shorted }}%</td>
+                    		<td>{{ stock_5_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_6_ticker }}.html" class="button">{{ stock_6_ticker }}</a></td>
+                    		<td>{{ stock_6_name }}</td>
+                    		<td>${{stock_6_price}}</td>
+                    		<td>{{ stock_6_float_shorted }}%</td>
+                    		<td>{{ stock_6_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_7_ticker }}.html" class="button">{{ stock_7_ticker }}</a></td>
+                    		<td>{{ stock_7_name }}</td>
+                    		<td>${{stock_7_price}}</td>
+                    		<td>{{ stock_7_float_shorted }}%</td>
+                    		<td>{{ stock_7_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_8_ticker }}.html" class="button">{{ stock_8_ticker }}</a></td>
+                    		<td>{{ stock_8_name }}</td>
+                    		<td>${{stock_8_price}}</td>
+                    		<td>{{ stock_8_float_shorted }}%</td>
+                    		<td>{{ stock_8_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<td><a href="/stock/{{ stock_9_ticker }}.html" class="button">{{ stock_9_ticker }}</a></td>
+                    		<td>{{ stock_9_name }}</td>
+                    		<td>${{stock_9_price}}</td>
+                    		<td>{{ stock_9_float_shorted }}%</td>
+                    		<td>{{ stock_9_short_iterest }}</td>
+                    	</tr>
+                    	<tr>
+                    		<<td><a href="/stock/{{ stock_10_ticker }}.html" class="button">{{ stock_10_ticker }}</a></td>
+                    		<td>{{ stock_10_name }}</td>
+                    		<td>${{stock_10_price}}</td>
+                    		<td>{{ stock_10_float_shorted }}%</td>
+                    		<td>{{ stock_10_short_iterest }}</td>
+                    	</tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+
+{% endblock %}
+
