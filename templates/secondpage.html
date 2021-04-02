@@ -45,34 +45,7 @@
         letter-spacing: 0.5px;
     }
 
-    .content-table thead tr:nth-child(odd) {
-        color: #277A2B;
-        font-size: 30px;
-    }
-
-    .content-table th,
-    .content-table td {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .content-table th {
-        font-weight: bolder;
-    }
-
-    .content-table td:nth-child(1) {
-        font-weight: bold
-    }
-
-    .content-table td:nth-child(2) {
-        font-weight: lighter
-    }
-
-    .content-table {
-
-
-    }
-        .left-col {
+    .left-col {
 
             border-bottom: thick solid;
             border-top: thick solid;
@@ -110,7 +83,7 @@
         border-color: white;
         box-shadow: 0 0 20px rgba(255, 252, 252, 0.5);
         padding: 40px;
-        min-height: 668px;
+        min-height: 780px;
 
 
     }
@@ -149,74 +122,46 @@
     </div>
 
 
-
-        <div class="row">
-            <div class="six columns">
-
-
-                <div class="left-col">
-                    <h5>Stock Technicals</h5>
-                    <table class="content-table">
-                        <thead>
-                        <!--  For Symbol we will use the api to call the Stock Ticker that was clicked on to display the Symbol
-                              Here we will use the api to call the Stock Ticker that was clicked on to display the Company Name -->
-                        <tr>
-                            <th>
-                                <button class="button-primary">{{ ticker }}</button>
-                            </th>
-                            <th>{{ ticker_name}}</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-
-                        <tr>
-                            <!--Here we will not change the first entry of the row (and every row) since it will hold a tag: "Stock Price:" -->
-                            <td>Stock Price:</td>
-                            <!--Here we will input api data for the stock price -->
-                            <td>{{ price }}</td>
-                        </tr>
-
-                        <tr>
-                            <!--  Here we will not change the first entry of the row (and every row) since it will hold a tag: "Volume:" -->
-                            <td>Volume:</td>
-                            <!--  Here we will input api data for the Volume -->
-                            <td>{{ volume }}</td>
-                        </tr>
-
-                        <tr>
-                            <!--  Here we will not change the first entry of the row (and every row) since it will hold a tag: "Average Volume:" -->
-                            <td>Average Volume:</td>
-                            <!--  Here we will input api data for the Average Volume-->
-                            <td>{{ average_volume }}</td>
-                        </tr>
-
-                        <tr>
-                            <!--  Here we will not change the first entry of the row (and every row) since it will hold a tag: "Market Capitalization:" -->
-                            <td>Market Capitalization:</td>
-                            <!--  Here we will input api data for the Market Capitalization -->
-                            <td>{{ market_captialization }}</td>
-                        </tr>
+    <div class="row">
+        <div class="six columns">
 
 
-                        <tr>
-                            <!--  Here we will not change the first entry of the row (and every row) since it will hold a tag: "52 Week High:" -->
-                            <td>52 Week High:</td>
-                            <!--  Here we will input api data for the 52 Week High -->
-                            <td>{{fiftytwo_week_high}}</td>
-                        </tr>
+            <div class="left-col">
+                <h5>Stock Technicals</h5>
 
-                        <tr>
-                            <!--  Here we will not change the first entry of the row (and every row) since it will hold a tag: "52 Week Low:" -->
-                            <td>52 Week Low:</td>
-                            <!--  Here we will input api data for the 52 Week Low -->
-                            <td>{{fiftytwo_week_low}}</td>
-                        </tr>
 
-                        </tbody>
-                    </table>
-                </div>
+                <!--  For Symbol we will use the api to call the Stock Ticker that was clicked on to display the Symbol
+                      Here we will use the api to call the Stock Ticker that was clicked on to display the Company Name -->
+
+                <button class="button-primary">{{ ticker }}</button>
+                <br>
+                <br>
+                <h4><strong>{{ ticker_name }}</strong></h4>
+
+                <strong>Stock Price:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;${{ price }}
+                <br>
+                <br>
+                <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ volume }}
+                <br>
+                <br>
+                <strong>Average</strong> <br>
+                <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ average_volume }}
+                <br>
+                <br>
+                <strong>Market</strong> <br>
+                <strong>Capitalization:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;{{ market_captialization }}
+                <br>
+                <br>
+                <strong>52 Week High:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;${{ fiftytwo_week_high }}
+                <br>
+                <br>
+                <strong>52 Week Low:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;&ensp;${{ fiftytwo_week_low }}
+                <br>
+                <br>
             </div>
+        </div>
+
+
 
             <div class="six columns">
                 <div class="right-col">

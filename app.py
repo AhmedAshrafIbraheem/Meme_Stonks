@@ -56,8 +56,8 @@ def home():
 @app.route('/stock/<string:stock_id>')
 def stock(stock_id):
     return render_template('secondpage.html', twitter_analysis="***Here we will input twitter sentiment analysis",
-                           ticker="XXX", ticker_name="Sample", price="", volume="", average_volume="",
-                           market_captialization="", fiftytwo_week_high="", fiftytwo_week_low="")
+                           ticker="XXX", ticker_name="Sample", price="220", volume="1,111,293", average_volume="1,002,219",
+                           market_captialization="2,101,101,111", fiftytwo_week_high="440.21", fiftytwo_week_low="19.02")
 
 
 if __name__ == '__main__':
