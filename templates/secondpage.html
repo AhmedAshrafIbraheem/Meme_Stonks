@@ -40,7 +40,7 @@
     }
 
 
-    h5 {
+    h5, h6 {
         font-family: Impact, Charcoal, sans-serif;
         letter-spacing: 0.5px;
     }
@@ -83,12 +83,22 @@
         border-color: white;
         box-shadow: 0 0 20px rgba(255, 252, 252, 0.5);
         padding: 40px;
-        min-height: 780px;
+        min-height: 816px;
 
 
     }
 
-
+    h5{
+        color: #277A2B;
+        border-bottom: thick solid;
+        border-top: thick solid;
+        border-left: thick solid;
+        border-right: thick solid;
+        border-color: white;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+    }
 
 
 
@@ -136,7 +146,7 @@
                 <button class="button-primary">{{ ticker }}</button>
                 <br>
                 <br>
-                <h4><strong>{{ ticker_name }}</strong></h4>
+                <h6><strong>{{ ticker_name }}</strong></h6>
 
                 <strong>Stock Price:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;${{ price }}
                 <br>

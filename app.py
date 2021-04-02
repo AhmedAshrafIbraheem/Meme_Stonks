@@ -21,31 +21,31 @@ def home():
                            stock_1_ticker="GME", stock_1_name="Gamestop", stock_1_price="220.92",
                            stock_1_float_shorted="42.11", stock_1_short_iterest="10,020,340",
 
-                           stock_2_ticker="NOK", stock_2_name="Nokia", stock_2_price="220.92",
+                           stock_2_ticker="NOK", stock_2_name="Nokia", stock_2_price="20.92",
                            stock_2_float_shorted="42.11", stock_2_short_iterest="10,020,340",
 
-                           stock_3_ticker="BBBY", stock_3_name="Gamestop", stock_3_price="220.92",
+                           stock_3_ticker="BBBY", stock_3_name="Bed Body", stock_3_price="10.92",
                            stock_3_float_shorted="42.11", stock_3_short_iterest="10,020,340",
 
-                           stock_4_ticker="SENS", stock_4_name="Gamestop", stock_4_price="220.92",
+                           stock_4_ticker="SENS", stock_4_name="Sensonomics", stock_4_price="160.92",
                            stock_4_float_shorted="42.11", stock_4_short_iterest="10,020,340",
 
-                           stock_5_ticker="ROK", stock_5_name="Gamestop", stock_5_price="220.92",
+                           stock_5_ticker="ROK", stock_5_name="Roket", stock_5_price="20.74",
                            stock_5_float_shorted="42.11", stock_5_short_iterest="10,020,340",
 
-                           stock_6_ticker="SOS", stock_6_name="Gamestop", stock_6_price="220.92",
+                           stock_6_ticker="SOS", stock_6_name="Sos Ltd.", stock_6_price="10.99",
                            stock_6_float_shorted="42.11", stock_6_short_iterest="10,020,340",
 
-                           stock_7_ticker="RIOT", stock_7_name="Gamestop", stock_7_price="220.92",
+                           stock_7_ticker="RIOT", stock_7_name="Riot ltd.", stock_7_price="90.92",
                            stock_7_float_shorted="42.11", stock_7_short_iterest="10,020,340",
 
-                           stock_8_ticker="MARA", stock_8_name="Gamestop", stock_8_price="220.92",
+                           stock_8_ticker="MARA", stock_8_name="Mara and group", stock_8_price="62.21",
                            stock_8_float_shorted="42.11", stock_8_short_iterest="10,020,340",
 
-                           stock_9_ticker="AMC", stock_9_name="Gamestop", stock_9_price="220.92",
+                           stock_9_ticker="AMC", stock_9_name="AMC theatres", stock_9_price="22.02",
                            stock_9_float_shorted="42.11", stock_9_short_iterest="10,020,340",
 
-                           stock_10_ticker="SPCE", stock_10_name="Gamestop", stock_10_price="220.92",
+                           stock_10_ticker="SPCE", stock_10_name="Space", stock_10_price="110.12",
                            stock_10_float_shorted="42.11", stock_10_short_iterest="10,020,340",
                            )
 
@@ -56,7 +56,7 @@ def home():
 @app.route('/stock/<string:stock_id>')
 def stock(stock_id):
     return render_template('secondpage.html', twitter_analysis="***Here we will input twitter sentiment analysis",
-                           ticker="XXX", ticker_name="Sample", price="220", volume="1,111,293", average_volume="1,002,219",
+                           ticker="XXX", ticker_name="Gamestop Corp.", price="220", volume="1,111,293", average_volume="1,002,219",
                            market_captialization="2,101,101,111", fiftytwo_week_high="440.21", fiftytwo_week_low="19.02")
 
 
