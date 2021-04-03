@@ -37,6 +37,8 @@ def testing():
             DatabaseInteraction.get_instance().delete_top10s()
         elif x.__eq__("delete2"):
             DatabaseInteraction.get_instance().delete_stocks()
+        elif x.__eq__("delete3"):
+            DatabaseInteraction.get_instance().delete_trends()
         elif x.__eq__("readall"):
             DatabaseInteraction.get_instance().read_all()
         elif x.__eq__("write"):
@@ -47,5 +49,6 @@ def testing():
             print("Wrong Input")
 
 
-# if __name__ == '__main__':
-#       testing()
+if __name__ == '__main__':
+    testing()
+

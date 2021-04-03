@@ -22,6 +22,7 @@ class DatabaseInteraction:
         self.my_db = self.my_client['SlamStonks']
         self.top10s = self.my_db['Top10s']
         self.stocks = self.my_db['Stocks']
+        self.google_trends = self.my_db['GoogleTrends']
         self.my_client.server_info()
 
     def store_top10s(self, tickers_list: []):
@@ -30,6 +31,14 @@ class DatabaseInteraction:
             to_store.append(ticker.get_home_page_info())
         self.top10s.insert_one({"Top10": to_store})
         print("Top10 Write is Done")
+
+    def store_trends(self, tickers_trends):
+        self.google_trends.insert_one({"GoogleTrends": tickers_trends})
+        print("Google Trends Write is Done")
+
+    def delete_trends(self):
+        self.my_db.drop_collection('GoogleTrends')
+        print('Google Trends Deleted')
 
     def delete_top10s(self):
         self.my_db.drop_collection('Top10s')
@@ -42,6 +51,10 @@ class DatabaseInteraction:
     def read_all(self):
         print("All Top10s")
         for x in self.top10s.find():
+            print(x)
+
+        print('All Trends')
+        for x in self.google_trends.find():
             print(x)
 
         print("All Stocks")

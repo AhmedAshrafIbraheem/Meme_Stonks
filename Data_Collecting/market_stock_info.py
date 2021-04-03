@@ -28,7 +28,7 @@ def grab_stock_info(ticker):
 # # Volume for a given Ticker and*Includes extended trading hours*
 # # @Return: Python dictionary
 def Intraday(ticker):
-    url = f'https://api.marketstack.com/v1/intraday?access_key=61578059aad857bacd9150dc716b8c82&symbols={ticker}&interval=1min'
+    url = f'https://api.marketstack.com/v1/intraday?access_key=61578059aad857bacd9150dc716b8c82&symbols={ticker}&interval=1min&limit=500'
     response = get(url)
     info = response.json()
 

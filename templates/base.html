@@ -1,43 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!--
-<head>
-    <title> | Slam Stonks </title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
-</head>
-<body>
-{#    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">#}
-{#        <div class="container topnav">#}
-{#          <div class="navbar-header">#}
-{#              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">#}
-{#                  <span class="sr-only">Toggle navigation</span>#}
-{#                  <span class="icon-bar"></span>#}
-{#                  <span class="icon-bar"></span>#}
-{#                  <span class="icon-bar"></span>#}
-{#              </button>#}
-{#              <a class="navbar-brand topnav" href="{{ url_for('index') }}">Slam Stonks</a>#}
-{#          </div>#}
-{#          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">#}
-{#              <ul class="nav navbar-nav navbar-right">#}
-{#                <li><a><i class="fa fa-user"></i>  Hi, Investor Friend!</a></li>#}
-{#              </ul>#}
-{#          </div>#}
-{#        </div>#}
-{#    </nav>#}
-    <div class="wrapper">
-{#        {% block body %}#}
-{#        {% endblock %}#}
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</body>
-</html>
--->
 <head>
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -53,16 +16,12 @@
 
     <!-- Linking Skeleton framework
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
     <link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/skeleton.css') }}" rel="stylesheet">
 
 
     <!-- Alex's chart
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 
 </head>
@@ -129,19 +88,19 @@
 
 <body>
 
-<div class="header">
-    <div class="title-part1">
-        slam Stonks<br>
-    </div>
-    <div class="title-part2">
+    <div class="header">
+        <div class="title-part1">
+            slam Stonks<br>
+        </div>
+        <div class="title-part2">
 
-        to the moon
+            to the moon
+        </div>
     </div>
-</div>
 
- {% block content %}
-    missing content include
-{% endblock %}
+     {% block content %}
+        missing content include
+    {% endblock %}
 
 </body>
 

@@ -1,17 +1,12 @@
-# social_stock_info.py
-# slamstonks.com
-# ...
-# ...
-#from requests import get
-#import tweepy
-#import re
+
 import pandas as pd
 from pytrends.request import TrendReq
 
 
 # THE CODE TO DO THIS IS NOT DONE YET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # pull top_10 stocks from db or from the controller that calls this and the mw scraper:
-top_10_stocks = ["LAZR", "KMPH", "TMBR", "EYES", "FBRX", "ROOT", "OTRK", "HJLI", "PUBM", "ASO"]
+# top_10_stocks = ["LAZR", "KMPH", "TMBR", "EYES", "FBRX", "ROOT", "OTRK", "HJLI", "PUBM", "ASO"]
+
 
 ############################################################
 #
@@ -25,7 +20,7 @@ def averager(ticker_dictionary):
     current_date = popping_from_ticker[0].strftime("%Y-%m-%d")  # string
     counter = popping_from_ticker[1]  # int
     counter_for_avg = 1
-    while (len(ticker_dictionary) > 0):
+    while len(ticker_dictionary) > 0:
         popping_from_ticker = ticker_dictionary.popitem()
         temp_current_date = popping_from_ticker[0].strftime("%Y-%m-%d")
         if temp_current_date == current_date:

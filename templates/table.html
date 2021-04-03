@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-
-
-
-
 <head>
 
   <!-- Basic Page Needs
@@ -119,112 +115,31 @@
     <div class="container">
         <div class="stock-header">
         <div class="row">
-            <div class="two columns">SYMBOL</div>
+            <div class="three columns">SYMBOL</div>
             <div class="three columns">COMPANY NAME</div>
-            <div class="one columns">PRICE</div>
-            <div class="three columns">&emsp;&ensp;FLOAT SHORTED</div>
+            <div class="three columns">FLOAT SHORTED</div>
             <div class="three columns">SHORT INTEREST</div>
         </div>
         </div>
-    <br>
-    <div class="stock-data">
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_1_ticker }}" class="button">{{ stock_1_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_1_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_1_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_1_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_1_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_2_ticker }}" class="button">{{ stock_2_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_2_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_2_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_2_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_2_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_3_ticker }}" class="button">{{ stock_3_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_3_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_3_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_3_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_3_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_4_ticker }}" class="button">{{ stock_4_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_4_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_4_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_4_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_4_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_5_ticker }}" class="button">{{ stock_5_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_5_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_5_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_5_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_5_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_6_ticker }}" class="button">{{ stock_6_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_6_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_6_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_6_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_6_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_7_ticker }}" class="button">{{ stock_7_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_7_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_7_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_7_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_7_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_8_ticker }}" class="button">{{ stock_8_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_8_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_8_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_8_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_8_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_9_ticker }}" class="button">{{ stock_9_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_9_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_9_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_9_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_9_short_iterest }}</h6></div>
-        </div>
-        <div class="row">
-            <div class="two columns">
-                <a href="/stock/{{ stock_10_ticker }}" class="button">{{ stock_10_ticker }}</a>
-            </div>
-            <div class="three columns"><h6>{{ stock_10_name }}</h6></div>
-            <div class="two columns"><h6>${{stock_10_price}}</h6></div>
-            <div class="two columns"><h6>{{ stock_10_float_shorted }}%</h6></div>
-            <div class="three columns"><h6>{{ stock_10_short_iterest }}</h6></div>
+        <br>
+        <div class="stock-data">
+            {% for ticker in data %}
+                <div class="row">
+                    <div class="three columns">
+                        <a href="/stock/{{ticker[0]}}" class="button">{{ticker[0]}}</a>
+                    </div>
+                    <div class="three columns"><h6>{{ticker[1]}}</h6></div>
+                    <div class="three columns"><h6>{{ticker[2]}}</h6></div>
+                    <div class="three columns"><h6>{{ticker[3]}}</h6></div>
+                </div>
+            {% endfor %}
+
         </div>
     </div>
 
-    </div>
-
-
     <br>
-    <p> TOP TEN STOCK PREFORMANCE CHART</p>
+
+<p> TOP TEN STOCK PERFORMANCE CHART</p>
 <div class="chart-contrast">
 <div class="container">
 <div class="row">

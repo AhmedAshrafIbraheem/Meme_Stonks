@@ -25,6 +25,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;400&display=swap" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 
 </head>
 
@@ -121,12 +122,44 @@
 
 
 <div class="container">
+
     <div class="row">
         <div class="twelve columns">
             <div class="center-col">
-                <h5 class="section-title">{{ ticker }}: Stock Price Chart</h5>
+                <h5 class="section-title">{{ data.symbol }}: Stock Price Chart</h5>
 
+                {% if data.Dates %}
+                <canvas id="line-chart" width="800" height="450"></canvas>
+	             <script>
+               new Chart(document.getElementById("line-chart"), {
+              type: 'line',
+              data: {
+                labels: [{% for date in data.Dates %}
+                    "{{ date }}",
+                    {% endfor %}
 
+                ],
+                datasets: [{
+                    data: [{% for value in data.Values %}
+                        {{ value }},
+                        {% endfor %}],
+                    label: "Latest",
+                    borderColor: "#277A2B",
+                    fill: false
+                  },
+                ]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: '{{ data.symbol }}'
+                }
+              }
+            });
+	        </script>
+                {% else %}
+                <h6>Not Enough Data!!!! Sorry About That</h6>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -143,29 +176,31 @@
                 <!--  For Symbol we will use the api to call the Stock Ticker that was clicked on to display the Symbol
                       Here we will use the api to call the Stock Ticker that was clicked on to display the Company Name -->
 
-                <button class="button-primary">{{ ticker }}</button>
+                <button class="button-primary">{{ data.symbol }}</button>
                 <br>
                 <br>
-                <h6><strong>{{ ticker_name }}</strong></h6>
+                <h6><strong>{{ data.name }}</strong></h6>
 
-                <strong>Stock Price:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;${{ price }}
-                <br>
-                <br>
-                <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ volume }}
-                <br>
-                <br>
-                <strong>Average</strong> <br>
-                <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ average_volume }}
-                <br>
-                <br>
+                {% if data.avg_price %}
+                    <strong>Average</strong> <br>
+                    <strong>Price:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;&ensp;${{ data.avg_price }}
+                    <br>
+                    <br>
+                    <strong>Average</strong> <br>
+                    <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ data.avg_vol }}
+                    <br>
+                    <br>
+                {% endif %}
+
+
                 <strong>Market</strong> <br>
-                <strong>Capitalization:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;{{ market_captialization }}
+                <strong>Capitalization:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;{{ data.market_cap }}
                 <br>
                 <br>
-                <strong>52 Week High:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;${{ fiftytwo_week_high }}
+                <strong>52 Week High:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;${{ data.fiftytwo_week_high }}
                 <br>
                 <br>
-                <strong>52 Week Low:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;&ensp;${{ fiftytwo_week_low }}
+                <strong>52 Week Low:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;&ensp;${{ data.fiftytwo_week_low }}
                 <br>
                 <br>
             </div>
@@ -176,12 +211,13 @@
             <div class="six columns">
                 <div class="right-col">
                     <h5 class="section-title">Sentiment Analysis</h5>
-                    <br>
                     <button class="button-primary">Strong Buy</button>
                     <br>
                     <br>
                     <br>
-                    {{ twitter_analysis }}
+                    {{ data.social_dates }}
+                    <br>
+                    {{ data.social_values }}
 
                 </div>
 
