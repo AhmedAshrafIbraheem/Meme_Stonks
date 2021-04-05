@@ -80,7 +80,17 @@
         </div>
         <div class="seven columns">
             <h5 class="section-title center_text">Sentiment Analysis</h5>
-            <button class="button-primary">Strong Buy</button>
+            <button class="button-primary">
+                {% if week_avg < 30 -%}
+                    not recommended
+                {% elif last_2_days_avg > (1.5 * week_avg) %}
+                    recommended!
+                {% elif week_avg > 60 %}
+                    might be late...
+                {% else -%}
+                    watch closely
+                {% endif %}
+            </button>
             <br>
             <canvas id="s_a_chart"></canvas>
             <script>
