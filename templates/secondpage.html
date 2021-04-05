@@ -1,281 +1,139 @@
 {% extends "base.html" %}
 {% block content %}
-
-<head>
-    <!-- Basic Page Needs
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta charset="utf-8">
-    <title>SLAM STONKS</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Mobile Specific Metas
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    <!-- Linking Skeleton framework
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="../static/css/normalize.css">
-    <link rel="stylesheet" href="../static/css/skeleton.css">
-
-
-    <!-- Linking Font
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;400&display=swap" rel="stylesheet">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-
-</head>
-
-
-<style>
-
-
-    {#Margin on top#}
-    body {
-
-        background-color: silver;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-
-    h5, h6 {
-        font-family: Impact, Charcoal, sans-serif;
-        letter-spacing: 0.5px;
-    }
-
-    .left-col {
-
-            border-bottom: thick solid;
-            border-top: thick solid;
-            border-left: thick solid;
-            border-right: thick solid;
-            border-color: white;
-            margin-top: 30px;
-            box-shadow: 0 0 20px rgba(255, 252, 252, 0.5);
-            padding: 40px;
-
-    }
-    .center-col {
-
-        border-bottom: thick solid;
-        border-top: thick solid;
-        border-left: thick solid;
-        border-right: thick solid;
-        border-color: white;
-        margin-top: 30px;
-        box-shadow: 0 0 20px rgba(255, 252, 252, 0.5);
-        padding: 40px;
-
-
-
-    }
-
-
-    .right-col {
-
-        margin-top: 30px;
-        border-bottom: thick solid;
-        border-top: thick solid;
-        border-left: thick solid;
-        border-right: thick solid;
-        border-color: white;
-        box-shadow: 0 0 20px rgba(255, 252, 252, 0.5);
-        padding: 40px;
-        min-height: 816px;
-
-
-    }
-
-    h5{
-        color: #277A2B;
-        border-bottom: thick solid;
-        border-top: thick solid;
-        border-left: thick solid;
-        border-right: thick solid;
-        border-color: white;
-        padding-top: 10px;
-        padding-left: 10px;
-        padding-bottom: 10px;
-    }
-
-
-
-    .right-col > h6 {
-        color: #277A2B;
-        border-bottom: thick solid;
-        border-top: thick solid;
-        border-left: thick solid;
-        border-right: thick solid;
-        border-color: white;
-        text-align: center;
-
-    }
-
-
-</style>
-
-
-<body>
-
-
-<div class="container">
-
     <div class="row">
         <div class="twelve columns">
-            <div class="center-col">
-                <h5 class="section-title">{{ data.symbol }}: Stock Price Chart</h5>
+            <p><h3 class="centered_header text_color_green">Intraday: Price</h3></p>
+        </div>
+    </div>
+    <div class="row border1">
+        <div class="row">
+            <div class="twelve columns">
+                <div class="center-col">
+                    <h5 class="section-title">{{ data.symbol }}: Stock Price Chart</h5>
 
-                {% if data.Dates %}
-                <canvas id="line-chart" width="800" height="450"></canvas>
-	             <script>
-               new Chart(document.getElementById("line-chart"), {
-              type: 'line',
-              data: {
-                labels: [{% for date in data.Dates %}
-                    "{{ date }}",
-                    {% endfor %}
+                    {% if data.Dates %}
+                    <canvas id="line-chart" width="800" height="450"></canvas>
+                     <script>
+                   new Chart(document.getElementById("line-chart"), {
+                      type: 'line',
+                      data: {
+                        labels: [{% for date in data.Dates %}
+                            "{{ date }}",
+                            {% endfor %}
 
-                ],
-                datasets: [{
-                    data: [{% for value in data.Values %}
-                        {{ value }},
-                        {% endfor %}],
-                    label: "Latest",
-                    borderColor: "#277A2B",
-                    fill: false
-                  },
-                ]
-              },
-              options: {
-                title: {
-                  display: true,
-                  text: '{{ data.symbol }}'
-                }
-              }
-            });
-	        </script>
-                {% else %}
-                <h6>Not Enough Data!!!! Sorry About That</h6>
-                {% endif %}
+                        ],
+                        datasets: [{
+                            data: [{% for value in data.Values %}
+                                {{ value }},
+                                {% endfor %}],
+                            label: "Latest",
+                            borderColor: "#277A2B",
+                            fill: false
+                          },
+                        ]
+                      },
+                      options: {
+                        title: {
+                          display: true,
+                          text: '{{ data.symbol }}'
+                        }
+                      }
+                   });
+                </script>
+                    {% else %}
+                    <h6>Not Enough Data!!!! Sorry About That</h6>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-
-
-    <div class="row">
-        <div class="six columns">
-
-
-            <div class="left-col">
-                <h5>Stock Technicals</h5>
-
-
-                <!--  For Symbol we will use the api to call the Stock Ticker that was clicked on to display the Symbol
-                      Here we will use the api to call the Stock Ticker that was clicked on to display the Company Name -->
-
-                <button class="button-primary">{{ data.symbol }}</button>
+    <div class="row spacer_blank"></div>
+    <div class="row border1">
+        <div class="five columns">
+            <h5 class="center_text">Stock Technicals</h5>
+            <!--  For Symbol we will use the api to call the Stock Ticker that was clicked on to display the Symbol
+                  Here we will use the api to call the Stock Ticker that was clicked on to display the Company Name -->
+            <button class="button-primary">{{ data.symbol }}</button>
+            <br>
+            <br>
+            <h6><strong>{{ data.name }}</strong></h6>
+            {% if data.avg_price %}
+                <strong>Average</strong> <br>
+                <strong>Price:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;&ensp;${{ data.avg_price }}
                 <br>
                 <br>
-                <h6><strong>{{ data.name }}</strong></h6>
-
-                {% if data.avg_price %}
-                    <strong>Average</strong> <br>
-                    <strong>Price:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;&ensp;${{ data.avg_price }}
-                    <br>
-                    <br>
-                    <strong>Average</strong> <br>
-                    <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ data.avg_vol }}
-                    <br>
-                    <br>
-                {% endif %}
-
-
-                <strong>Market</strong> <br>
-                <strong>Capitalization:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;{{ data.market_cap }}
+                <strong>Average</strong> <br>
+                <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ data.avg_vol }}
                 <br>
                 <br>
-                <strong>52 Week High:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;${{ data.fiftytwo_week_high }}
-                <br>
-                <br>
-                <strong>52 Week Low:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;&ensp;${{ data.fiftytwo_week_low }}
-                <br>
-                <br>
-            </div>
+            {% endif %}
+            <strong>Market</strong> <br>
+            <strong>Capitalization:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;{{ data.market_cap }}
+            <br>
+            <br>
+            <strong>52 Week High:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;${{ data.fiftytwo_week_high }}
+            <br>
+            <br>
+            <strong>52 Week Low:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;&ensp;${{ data.fiftytwo_week_low }}
+            <br>
+            <br>
         </div>
+        <div class="seven columns">
+            <h5 class="section-title center_text">Sentiment Analysis</h5>
+            <button class="button-primary">Strong Buy</button>
+            <br>
+            <canvas id="s_a_chart"></canvas>
+            <script>
+                var ctx = document.getElementById("s_a_chart");
 
-
-
-            <div class="six columns">
-                <div class="right-col">
-                    <h5 class="section-title">Sentiment Analysis</h5>
-                    <button class="button-primary">Strong Buy</button>
-                    <br>
-
-                   <canvas id="s_a_chart"></canvas>
-	<script>
-            var ctx = document.getElementById("s_a_chart");
-
-            var s_a_chart = new Chart(ctx, {
-              type: 'line',
-              data: {
-                labels: [ {% for item in data_social_dates %}
-                    {% if item == data_social_dates[-1] -%}
-                        "TODAY",
-                    {% else -%}
-                        "{{ item }}",
-                    {% endif %}
-                    {% endfor %} ],
-                datasets: [
-                    {
-                    label: "{{ data.symbol }}",
-                    data: [{x: "{{ data_social_dates[0] }}", y: {{ data_social_values[0] }}}, {x: "{{ data_social_dates[1] }}", y: {{ data_social_values[1] }}}, {x: "{{ data_social_dates[2] }}", y: {{ data_social_values[2] }}}, {x: "{{ data_social_dates[3] }}", y: {{ data_social_values[3] }}}, {x: "{{ data_social_dates[4] }}", y: {{ data_social_values[4] }}}, {x: "{{ data_social_dates[5] }}", y: {{ data_social_values[5] }}}, {x: "{{ data_social_dates[6] }}", y: {{ data_social_values[6] }}}, {x: "{{ data_social_dates[7] }}", y: {{ data_social_values[7] }}}],
-                    showLine: true,
-                    fill: false,
-                    borderColor: 'rgba(255, 0, 0, 1)',
-                    lineTension: 0
-                    }
-                ]
-              },
-              options: {
-                tooltips: {
-                  mode: 'index',
-                  intersect: false,
-                },
-                hover: {
-                  mode: 'nearest',
-                  intersect: true
-                },
-                scales: {
-                  yAxes: [{
-                    ticks: {
-                      autoSkip: false,
-                      beginAtZero: true,
-                      max: 100,
-                      stepSize: 20
-                    }
-                  }],
-                  xAxes: [{
-                    ticks: {
-                      autoSkip: false
-                    }
-                  }]
-                },
-              }
-            });
-	</script>
-
-                </div>
-
-            </div>
-
-
+                var s_a_chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [ {% for item in data_social_dates %}
+                            {% if item == data_social_dates[-1] -%}
+                                "TODAY",
+                            {% else -%}
+                                "{{ item }}",
+                            {% endif %}
+                            {% endfor %} ],
+                        datasets: [
+                            {
+                            label: "{{ data.symbol }}",
+                            data: [{x: "{{ data_social_dates[0] }}", y: {{ data_social_values[0] }}}, {x: "{{ data_social_dates[1] }}", y: {{ data_social_values[1] }}}, {x: "{{ data_social_dates[2] }}", y: {{ data_social_values[2] }}}, {x: "{{ data_social_dates[3] }}", y: {{ data_social_values[3] }}}, {x: "{{ data_social_dates[4] }}", y: {{ data_social_values[4] }}}, {x: "{{ data_social_dates[5] }}", y: {{ data_social_values[5] }}}, {x: "{{ data_social_dates[6] }}", y: {{ data_social_values[6] }}}, {x: "{{ data_social_dates[7] }}", y: {{ data_social_values[7] }}}],
+                            showLine: true,
+                            fill: false,
+                            borderColor: "#277A2B",
+                            lineTension: 0
+                            }
+                        ]
+                        },
+                        options: {
+                        tooltips: {
+                          mode: 'index',
+                          intersect: false,
+                        },
+                        hover: {
+                          mode: 'nearest',
+                          intersect: true
+                        },
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              autoSkip: false,
+                              beginAtZero: true,
+                              max: 100,
+                              stepSize: 20
+                            }
+                          }],
+                          xAxes: [{
+                            ticks: {
+                              autoSkip: false
+                            }
+                          }]
+                        },
+                      }
+                    });
+            </script>
         </div>
-</div>
-
-
-</body>
-
+    </div>
 {% endblock %}

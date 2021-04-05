@@ -1,0 +1,43 @@
+.body_stuff {
+    background-color: black;
+    color: white;
+}
+.border1 {
+    border-style: solid;
+    border-width: 3px;
+    border-color: red;
+    padding: 5px;
+}
+.button {
+    color: black;
+    background-color: #277A2B;
+}
+.center_text {
+    text-align: center;
+}
+.centered_header {
+    text-align: center;
+    text-decoration: underline;
+}
+.padding_bottom_1 {
+    padding-bottom: 10px;
+}
+.spacer {
+    height: 15px;
+    background-color: #555555;
+}
+.spacer_blank {
+    height: 15px;
+}
+.text_color_green {
+    color: green;
+}
+.text_color_red {
+    color: red;
+}
+.text_underline {
+    text-decoration: underline;
+}
+.vertical_align_middle {
+    vertical-align: middle;
+}

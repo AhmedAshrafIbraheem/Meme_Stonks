@@ -1,111 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
     <title>{{ title }} | Slam Stonks </title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Mobile Specific Metas
+    <meta name="description" content="www.slamstonks.com">
+    <meta name="author" content="SlamStonks">
+    <!-- Viewport
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    <!-- Linking Skeleton framework
+    <!-- Linking Skeleton framework and custom CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/skeleton.css') }}" rel="stylesheet">
-
-
-    <!-- Alex's chart
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <!-- Chart.js library via CDN
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-
 </head>
-
-<style>
-
-
-    {#Margin on top#}
-    body {
-
-        background-color: silver;
-    }
-
-
-    .header {
-        width: 100%;
-        height: 250px;
-        display: block;
-        background-color: black;
-        margin-bottom: 100px;
-
-    }
-
-    .title-part1 {
-        font-family: Impact, Charcoal, sans-serif;
-        font-size: 100px;
-        letter-spacing: 0.8px;
-        word-spacing: 0.2px;
-        color: #277A2B;
-        font-weight: normal;
-        text-decoration: underline solid rgb(68, 68, 68);
-        font-style: normal;
-        font-variant: normal;
-        text-transform: uppercase;
-        text-align: Center;
-
-    }
-
-    .title-part2 {
-        font-family: Impact, Charcoal, sans-serif;
-        font-size: 40px;
-        letter-spacing: 0.8px;
-        word-spacing: 0.2px;
-        color: #FAFAFA;
-        font-weight: normal;
-        text-decoration: none solid rgb(68, 68, 68);
-        font-style: normal;
-        font-variant: normal;
-        text-transform: uppercase;
-        text-align: center;
-        margin-top: -8px;
-    }
-
-
-        .footer{
-        height: 100px;
-        background-color: black;
-        color: #277A2B;
-        text-align: center;
-        margin-top: 35px;
-    }
-
-</style>
-
-<body>
-
-    <div class="header">
-        <div class="title-part1">
-            slam Stonks<br>
-        </div>
-        <div class="title-part2">
-
-            to the moon
+<body class="body_stuff">
+    <div class="container">
+        <a href="{{ url_for('index') }}">
+            <div class="row">
+                <div class="eight columns center_text text_color_green vertical_align_middle">
+                    <br>
+                    <h3>SLAMSTONKS</h3>
+                </div>
+                <div class="four columns">
+                    <img src="{{ url_for('static', filename='img/wsbguy.png') }}">
+                </div>
+            </div>
+        </a>
+        <div class="spacer"></div>
+        {% block content %}
+        {% endblock %}
+        <div class="spacer_blank"></div>
+        <div class="spacer"></div>
+        <div class="row">
+            <div class="twelve columns center_text">
+                &copy; 2021 slamstonks.com
+            </div>
         </div>
     </div>
-
-     {% block content %}
-        missing content include
-    {% endblock %}
-
 </body>
-
-<div class="footer">
-    <br>
-    SLAM STONKS &#169 All Rights Reserved
-</div>
 
