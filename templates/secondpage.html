@@ -211,66 +211,61 @@
             <div class="six columns">
                 <div class="right-col">
                     <h5 class="section-title">Sentiment Analysis</h5>
-                    <canvas id="s_a_chart"></canvas>
-                    <script>
-                            var ctx = document.getElementById("s_a_chart");
-
-                            var s_a_chart = new Chart(ctx, {
-                              type: 'line',
-                              data: {
-                                labels: [ {% for item in data.social_dates %}
-                                    {% if item == data.social_dates[-1] -%}
-                                        "TODAY",
-                                    {% else -%}
-                                        "{{ item }}",
-                                    {% endif %}
-                                    {% endfor %} ],
-                                datasets: [
-                                    {
-                                    label: "PUT TICKER NAME VARIABLE HERE",
-                                    data: [{x: "{{ data.social_dates[0] }}", y: {{ data.social_values[0] }}}, {x: "{{ data.social_dates[1] }}", y: {{ data.social_values[1] }}}, {x: "{{ data.social_dates[2] }}", y: {{ data.social_values[2] }}}, {x: "{{ data.social_dates[3] }}", y: {{ data.social_values[3] }}}, {x: "{{ data.social_dates[4] }}", y: {{ data.social_values[4] }}}, {x: "{{ data.social_dates[5] }}", y: {{ data.social_values[5] }}}, {x: "{{ data.social_dates[6] }}", y: {{ data.social_values[6] }}}, {x: "{{ data.social_dates[7] }}", y: {{ data.social_values[7] }}}],
-                                    showLine: true,
-                                    fill: false,
-                                    borderColor: 'rgba(255, 0, 0, 1)',
-                                    lineTension: 0
-                                    }
-                                ]
-                              },
-                              options: {
-                                tooltips: {
-                                  mode: 'index',
-                                  intersect: false,
-                                },
-                                hover: {
-                                  mode: 'nearest',
-                                  intersect: true
-                                },
-                                scales: {
-                                  yAxes: [{
-                                    ticks: {
-                                      autoSkip: false,
-                                      beginAtZero: true,
-                                      max: 100,
-                                      stepSize: 20
-                                    }
-                                  }],
-                                  xAxes: [{
-                                    ticks: {
-                                      autoSkip: false
-                                    }
-                                  }]
-                                },
-                              }
-                            });
-                    </script>
-
                     <button class="button-primary">Strong Buy</button>
                     <br>
-                    <br>
-                    <br>
-                    {{ data.social_dates }}
-                    <br>
-                    {{ data.social_values }}
+
+                   <canvas id="s_a_chart"></canvas>
+	<script>
+            var ctx = document.getElementById("s_a_chart");
+
+            var s_a_chart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: [ {% for item in data_social_dates %}
+                    {% if item == data_social_dates[-1] -%}
+                        "TODAY",
+                    {% else -%}
+                        "{{ item }}",
+                    {% endif %}
+                    {% endfor %} ],
+                datasets: [
+                    {
+                    label: "{{ data.symbol }}",
+                    data: [{x: "{{ data_social_dates[0] }}", y: {{ data_social_values[0] }}}, {x: "{{ data_social_dates[1] }}", y: {{ data_social_values[1] }}}, {x: "{{ data_social_dates[2] }}", y: {{ data_social_values[2] }}}, {x: "{{ data_social_dates[3] }}", y: {{ data_social_values[3] }}}, {x: "{{ data_social_dates[4] }}", y: {{ data_social_values[4] }}}, {x: "{{ data_social_dates[5] }}", y: {{ data_social_values[5] }}}, {x: "{{ data_social_dates[6] }}", y: {{ data_social_values[6] }}}, {x: "{{ data_social_dates[7] }}", y: {{ data_social_values[7] }}}],
+                    showLine: true,
+                    fill: false,
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    lineTension: 0
+                    }
+                ]
+              },
+              options: {
+                tooltips: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                hover: {
+                  mode: 'nearest',
+                  intersect: true
+                },
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      autoSkip: false,
+                      beginAtZero: true,
+                      max: 100,
+                      stepSize: 20
+                    }
+                  }],
+                  xAxes: [{
+                    ticks: {
+                      autoSkip: false
+                    }
+                  }]
+                },
+              }
+            });
+	</script>
 
                 </div>
 

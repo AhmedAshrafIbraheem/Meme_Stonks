@@ -76,6 +76,13 @@ class StockInfo:
             self.avg_price = sum(self.Values) / len(self.Values)
             self.avg_price = round(self.avg_price, 3)
 
-        self.social = info['social']
-        self.social_dates = self.social.keys()
-        self.social_values = self.social.values()
+        social = info['social']
+        self.social_dates = []
+        self.social_values = []
+        for key in social:
+            self.social_dates.append(key)
+            self.social_values.append(social[key])
+        self.social_dates.reverse()
+        self.social_values.reverse()
+
+

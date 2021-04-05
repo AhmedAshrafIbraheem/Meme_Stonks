@@ -35,7 +35,7 @@ def index():
 def stock_data(ticker: str):
     ticker = ticker.upper()
     data = get_ticker_data(ticker)
-    return render_template('secondpage.html', data=data)
+    return render_template('secondpage.html', data=data, data_social_dates=data.social_dates, data_social_values=data.social_values)
 
 
 if __name__ == '__main__':
