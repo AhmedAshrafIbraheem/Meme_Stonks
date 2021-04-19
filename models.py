@@ -1,6 +1,9 @@
 from pymongo import MongoClient, DESCENDING
 
 # sudo systemctl start mongod
+from Data_Collecting.market_stock_info import grab_stock_info
+from Data_Collecting import social_stock_info
+
 server_link = 'mongodb://localhost:27017/'
 database_name = 'SlamStonks'
 
@@ -40,6 +43,14 @@ def get_ticker_data(ticker):
     stocks = col_stocks.find_one({"_id": ticker})
     my_client.close()
     return StockInfo(stocks["Data"]) if stocks else None
+
+
+def search_ticker(ticker):
+    data = grab_stock_info(ticker)
+    social_info = social_stock_info.google_trends(ticker)
+    data['social'] = social_info
+
+    return StockInfo(data) if data['overview'] else None
 
 
 class StockInfo:

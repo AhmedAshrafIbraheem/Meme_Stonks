@@ -1,11 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, flash, redirect, request
 from gevent.pywsgi import WSGIServer
-from models import get_analysis, get_ticker_data, get_chart_analysis
+from models import get_analysis, get_ticker_data, get_chart_analysis, search_ticker
 import os
 
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
+
+# TODO: Mohamed, Implement error pages with skeleton. Found in templates/errors
 
 
 @app.errorhandler(403)
@@ -33,9 +35,42 @@ def index():
 
 @app.route('/stock/<string:ticker>', methods=['GET'])
 def stock_data(ticker: str):
+    if not _ticker_validation(ticker):
+        flash("Wrong Ticker Format")
+        return redirect(url_for("index"))
+
     ticker = ticker.upper()
     data = get_ticker_data(ticker)
+    
+    if not data:
+        flash("Wrong Ticker Format")
+        return redirect(url_for("index"))
+
     return render_template('secondpage.html', data=data)
+
+
+@app.route('/search', methods=['POST'])
+def search_stock():
+    ticker = request.form['search']
+
+    if not _ticker_validation(ticker):
+        flash("Wrong Ticker Format")
+        return redirect(url_for("index"))
+
+    ticker = ticker.upper()
+    data = search_ticker(ticker)
+
+    if not data:
+        flash("Wrong Ticker Format")
+        return redirect(url_for("index"))
+
+    return render_template('secondpage.html', data=data)
+
+
+def _ticker_validation(ticker: str) -> bool:
+    if len(ticker) < 3 or len(ticker) > 5:
+        return False
+    return ticker.isalpha()
 
 
 if __name__ == '__main__':

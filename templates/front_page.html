@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
+
+    {% for message in get_flashed_messages() %}
+        <p style="text-align: center; display: block; padding: 20px;
+                  border-left: 5px solid; background-color: #D6EAF8;
+                  border-left-color: #3498DB; color: #3498DB; ">{{ message }}</p>
+    {% endfor %}
+    <br>
+    <div class="row">
+        <div class="twelve columns">
+            <form style="text-align: center;" action="/search" method="POST">
+                <label style="color: #C1FFC1">Search for whatever Stock you think of just by typing its ticker</label> <br>
+                <input style="color: black" name="search" type="search" placeholder="Search" minlength="3" maxlength="5" required>
+                <input style="color: white" type="submit" value="Search">
+            </form>
+        </div>
+    </div>
+
     <div class="row">
         <div class="twelve columns">
             <p><h3 class="centered_header text_color_green">TOP TEN SHORTED STOCK WATCHLIST</h3></p>
