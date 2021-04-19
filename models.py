@@ -85,4 +85,5 @@ class StockInfo:
         self.social_dates.reverse()
         self.social_values.reverse()
 
-
+        self.week_avg = sum(self.social_values) / len(self.social_values)
+        self.last_2_days_avg = (self.social_values[-1] + self.social_values[-2]) / 2

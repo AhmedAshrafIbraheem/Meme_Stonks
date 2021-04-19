@@ -35,6 +35,8 @@ def Intraday(ticker):
     if 'data' not in info:
         return None
 
+    # TODO: Shourav, fetch data from another source like alph-advantage
+
     data = info['data']
     time = []
 

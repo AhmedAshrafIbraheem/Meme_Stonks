@@ -81,11 +81,11 @@
         <div class="seven columns">
             <h5 class="section-title center_text">Sentiment Analysis</h5>
             <button class="button-primary">
-                {% if week_avg < 30 -%}
+                {% if data.week_avg < 30 -%}
                     not recommended
-                {% elif last_2_days_avg > (1.5 * week_avg) %}
+                {% elif data.last_2_days_avg > (1.5 * data.week_avg) %}
                     recommended!
-                {% elif week_avg > 60 %}
+                {% elif data.week_avg > 60 %}
                     might be late...
                 {% else -%}
                     watch closely
@@ -96,20 +96,32 @@
             <script>
                 var ctx = document.getElementById("s_a_chart");
 
+                var label_dates = [];
+                {% for item in data.social_dates %}
+                    label_dates.push("{{ item }}");
+                {% endfor %}
+                label_dates[label_dates.length - 1] = "Today";
+
+                var label_values = [];
+                {% for item in data.social_values %}
+                    label_values.push("{{ item }}");
+                {% endfor %}
+
                 var s_a_chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: [ {% for item in data_social_dates %}
-                            {% if item == data_social_dates[-1] -%}
-                                "TODAY",
-                            {% else -%}
-                                "{{ item }}",
-                            {% endif %}
-                            {% endfor %} ],
+                        labels: label_dates,
                         datasets: [
                             {
                             label: "{{ data.symbol }}",
-                            data: [{x: "{{ data_social_dates[0] }}", y: {{ data_social_values[0] }}}, {x: "{{ data_social_dates[1] }}", y: {{ data_social_values[1] }}}, {x: "{{ data_social_dates[2] }}", y: {{ data_social_values[2] }}}, {x: "{{ data_social_dates[3] }}", y: {{ data_social_values[3] }}}, {x: "{{ data_social_dates[4] }}", y: {{ data_social_values[4] }}}, {x: "{{ data_social_dates[5] }}", y: {{ data_social_values[5] }}}, {x: "{{ data_social_dates[6] }}", y: {{ data_social_values[6] }}}, {x: "{{ data_social_dates[7] }}", y: {{ data_social_values[7] }}}],
+                            data: [{x: label_dates[0], y: label_values[0]},
+                                   {x: label_dates[1], y: label_values[1]},
+                                   {x: label_dates[2], y: label_values[2]},
+                                   {x: label_dates[3], y: label_values[3]},
+                                   {x: label_dates[4], y: label_values[4]},
+                                   {x: label_dates[5], y: label_values[5]},
+                                   {x: label_dates[6], y: label_values[6]},
+                                   {x: label_dates[7], y: label_values[7]}],
                             showLine: true,
                             fill: false,
                             borderColor: "#277A2B",
