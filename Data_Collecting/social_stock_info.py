@@ -1,11 +1,8 @@
-
+# Alex - cleanup everything...
+#
+from time import sleep
 import pandas as pd
 from pytrends.request import TrendReq
-
-
-# THE CODE TO DO THIS IS NOT DONE YET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# pull top_10 stocks from db or from the controller that calls this and the mw scraper:
-# top_10_stocks = ["LAZR", "KMPH", "TMBR", "EYES", "FBRX", "ROOT", "OTRK", "HJLI", "PUBM", "ASO"]
 
 
 ############################################################
@@ -42,98 +39,81 @@ def averager(ticker_dictionary):
 
 ############################################################
 # ......................................................................................................................
-### GOOGLE TRENDS ALL ######################################
+### GOOGLE TRENDS NORMALIZED ###############################
 # pytrends, pandas (dataframe, timeframe)
 # returns a nested dictonary containing data needed for
 # comparing the relative frequency of tickers compared to
 # each other.
 # Very helpful: https://towardsdatascience.com/telling-stories-with-google-trends-using-pytrends-in-python-a11e5b8a177
 def google_trends_normalized(top_10_stocks):
-    # reference keyword is the last element in top_10_stocks
-    first_three_tickers = top_10_stocks[0:3]
-    first_three_tickers.append(top_10_stocks[9])
-    second_three_tickers = top_10_stocks[3:6]
-    second_three_tickers.append(top_10_stocks[9])
-    last_four_tickers = top_10_stocks[6:10]
-
     # Only need to load this one time for following operations:
     pytrends = TrendReq()
-    # pull 1
-    kw_list = first_three_tickers
-    pytrends.build_payload(kw_list, cat=7, timeframe='now 7-d', geo='US', gprop='')
-    interest_over_time_1_df = pytrends.interest_over_time()
-    interest_over_time_1_df.rename(columns={top_10_stocks[9]: top_10_stocks[9] + '1'}, inplace=True)
-    del interest_over_time_1_df['isPartial']
-    #print(interest_over_time_1_df.head())        # useful for error testing
-    # pull 2
-    kw_list = second_three_tickers
-    pytrends.build_payload(kw_list, cat=7, timeframe='now 7-d', geo='US', gprop='')
-    interest_over_time_2_df = pytrends.interest_over_time()
-    interest_over_time_2_df.rename(columns={top_10_stocks[9]: top_10_stocks[9] + '2'}, inplace=True)
-    del interest_over_time_2_df['isPartial']
-    #print(interest_over_time_2_df.head())      # useful for error testing
-    # pull 3
-    kw_list = last_four_tickers
-    pytrends.build_payload(kw_list, cat=7, timeframe='now 7-d', geo='US', gprop='')
-    interest_over_time_3_df = pytrends.interest_over_time()
-    interest_over_time_3_df.rename(columns={top_10_stocks[9]: top_10_stocks[9] + '3'}, inplace=True)
-    del interest_over_time_3_df['isPartial']
-    #print(interest_over_time_3_df.head())     # useful for error testing
+    master_df = pd.DataFrame()
+    counter = 1
 
-    master_df = pd.concat([interest_over_time_1_df.reset_index(), interest_over_time_2_df.reset_index(), interest_over_time_3_df.reset_index()], axis=1)
-    master_df = master_df.loc[:,~master_df.columns.duplicated()]
-    master_df.set_index('date', inplace=True)
-    #print(master_df.to_string())
+    for x in top_10_stocks:
+        if x != top_10_stocks[-1]:
+            kw_list = [x, top_10_stocks[-1]]
+            pytrends.build_payload(kw_list, cat=7, timeframe='now 7-d', geo='US', gprop='')
+            interest_over_time_df = pytrends.interest_over_time()
+            interest_over_time_df.rename(columns={top_10_stocks[-1]: top_10_stocks[-1] + str(counter)}, inplace=True)
+            del interest_over_time_df['isPartial']
+            master_df = pd.concat([master_df, interest_over_time_df], axis=1)
+            counter += 1
+            sleep(0.15)
+
+    master_df = master_df.loc[:, ~master_df.columns.duplicated()]
 
     nested_dictionary = {}
-
     tickers_plus_normalizers_list = list(master_df.columns)
-
-    #print(tickers_plus_normalizers_list)
 
     for x in tickers_plus_normalizers_list:
         # prepping variables for the coming while loop that uses them. We need to get the current_date before we can
         # cycle through the dictionary. current_date is critical to successful execution.
-        ticker_only_dictionary = master_df.to_dict().get(x) # grabs the ticker dictionary from the dataframe
-        #print(ticker_only_dictionary)
+        ticker_only_dictionary = master_df.to_dict().get(x)  # grabs the ticker dictionary from the dataframe
+        # print(ticker_only_dictionary)
         nested_dictionary.update({x: averager(ticker_only_dictionary)})
 
-    #print(nested_dictionary)
+    # averaging out normalizing ticker across .......
+    #
+    average_list = [0, 0, 0, 0, 0, 0, 0, 0]
+    for x in nested_dictionary:
+        for_loop_counter = 0
+
+        if x[-1].isdigit():
+            for xx in nested_dictionary[x]:
+                average_list[for_loop_counter] += nested_dictionary[x][xx]
+                for_loop_counter += 1
+
+    weird_list = []
+
+    for x in average_list:      # average the results
+        weird_list.append(x / 8.0)
+
+    for_loop_counter = 0
+    for x in nested_dictionary[tickers_plus_normalizers_list[1]]:
+        nested_dictionary[tickers_plus_normalizers_list[1]][x] = weird_list[for_loop_counter]
+        for_loop_counter += 1
 
     for_loop_counter = 0
     for x in tickers_plus_normalizers_list:
-        #print(x)
-        if for_loop_counter < 3:
-            for xx in nested_dictionary[x]:
-                nested_dictionary[x][xx] = round((float(nested_dictionary[x][xx]) + .01) * (float(nested_dictionary[tickers_plus_normalizers_list[7]][xx]) + .01) / (float(nested_dictionary[tickers_plus_normalizers_list[3]][xx]) + .01), 2)
-                #print(x, xx, nested_dictionary[x][xx], sep="\t\t\t")
-        if for_loop_counter == 3:
+        if for_loop_counter == 0 or for_loop_counter == 1 or x == top_10_stocks[-1]:
             for xx in nested_dictionary[x]:
                 nested_dictionary[x][xx] = round(nested_dictionary[x][xx], 2)
-                #print(x, xx, nested_dictionary[x][xx], sep="\t\t\t")
-        if for_loop_counter > 3 and for_loop_counter < 7:
+        elif for_loop_counter % 2 == 0:
             for xx in nested_dictionary[x]:
-                nested_dictionary[x][xx] = round((float(nested_dictionary[x][xx]) + .01) * (float(nested_dictionary[tickers_plus_normalizers_list[3]][xx]) + .01) / (float(nested_dictionary[tickers_plus_normalizers_list[7]][xx]) + .01), 2)
-                #print(x, xx, nested_dictionary[x][xx], sep="\t\t\t")
-        #if for_loop_counter == 7:
-            #for xx in nested_dictionary[x]:
-                #print(x, xx, nested_dictionary[x][xx], sep="\t\t\t")
-        if for_loop_counter > 7 and for_loop_counter < 11:
-            for xx in nested_dictionary[x]:
-                nested_dictionary[x][xx] = round((float(nested_dictionary[x][xx]) + .01) * (float(nested_dictionary[tickers_plus_normalizers_list[3]][xx]) + .01) / (float(nested_dictionary[tickers_plus_normalizers_list[11]][xx]) + .01), 2)
-                #print(x, xx, nested_dictionary[x][xx], sep="\t\t\t")
+                nested_dictionary[x][xx] = round(nested_dictionary[x][xx], 2)
 
         for_loop_counter += 1
 
-    nested_dictionary.pop(tickers_plus_normalizers_list[7])
-    nested_dictionary.pop(tickers_plus_normalizers_list[11])
-    remove_the_digit = tickers_plus_normalizers_list[3][:-1]
-    temp_dictionary = {remove_the_digit: nested_dictionary[tickers_plus_normalizers_list[3]]}
-    nested_dictionary.update(temp_dictionary)
-    nested_dictionary.pop(tickers_plus_normalizers_list[3])
-    del temp_dictionary
+    # change normalized value so that it no longer has a trailing digit: ('1')
+    nested_dictionary[tickers_plus_normalizers_list[1][:-1]] = nested_dictionary.pop(tickers_plus_normalizers_list[1])
 
-    #print(nested_dictionary)
+    # remove relational values for normalization:
+    for_loop_counter = 2
+    while for_loop_counter < 10:
+        del nested_dictionary[top_10_stocks[-1] + str(for_loop_counter)]
+        for_loop_counter += 1
 
     return nested_dictionary
 # END google_trends_normalized
