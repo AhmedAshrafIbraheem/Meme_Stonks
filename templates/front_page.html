@@ -361,6 +361,11 @@
                                 mode: 'index',
                                 intersect: false,
                             },
+                            legend: {
+                                labels: {
+                                    fontColor: 'white' //set your desired color
+                                }
+                            },
                             hover: {
                                 mode: 'nearest',
                                 intersect: true
@@ -372,11 +377,13 @@
                                         beginAtZero: true,
                                         stepSize: 20,
                                         suggestedMax: 100,
+                                        fontColor: 'white',
                                     }
                                 }],
                                 xAxes: [{
                                     ticks: {
-                                        autoSkip: false
+                                        autoSkip: false,
+                                        fontColor: 'white',
                                     }
                                 }]
                             },
