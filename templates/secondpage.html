@@ -30,6 +30,7 @@
                             borderColor: "#277A2B",
                             fill: false
                           },
+
                         ]
                       },
                       options: {
@@ -158,4 +159,56 @@
             </script>
         </div>
     </div>
+
+<div class="row spacer_blank"></div>
+<div class="row border1">
+    <div class="row">
+        <div class="twelve columns">
+
+    <h5 class="section-title"> Volume x Average Volume Chart</h5>
+
+            <canvas id="average-volume-chart" width="800" height="450"></canvas>
+            <script>
+                new Chart(document.getElementById("average-volume-chart"), {
+                    type: 'line',
+                    data: {
+                        labels: [{% for date in Dates %}
+                            "{{ date }}",
+                        {% endfor %}
+
+                        ],
+                        datasets: [
+                            {
+                                data: [{% for value in Values %}
+                                    {{ value }},
+                                {% endfor %}],
+                                label: "Volume",
+                                borderColor: "#5dcd3e",
+                                fill: false
+                            },
+                            {
+                                data: [{% for value in Average %}
+                                    {{ value }},
+                                {% endfor %}],
+                                label: "Average",
+                                borderColor: "#f5001b",
+                                fill: false
+
+                            },
+
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: '{{ Symbol }}'
+                        }
+                    }
+                });
+            </script>
+
+
+        </div>
+    </div>
+</div>
 {% endblock %}
