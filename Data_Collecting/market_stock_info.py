@@ -1,4 +1,5 @@
 from requests import get
+from datetime import datetime
 
 
 def grab_stock_info(ticker):
@@ -32,18 +33,30 @@ def Intraday(ticker):
     response = get(url)
     info = response.json()
 
-    if 'data' not in info:
-        return None
+    if 'data' in info:
+        data = info['data']
+        intraday = []
+        for curr in data:
+            if curr['last']:
+                date_obj = datetime.strptime(curr['date'], '%Y-%m-%dT%H:%M:%S+%f')
+                curr['date'] = datetime.strftime(date_obj, '%Y-%m-%d %H:%M')
+                intraday.append(curr)
+        return intraday
 
-    # TODO: Shourav, fetch data from another source like alph-advantage
-
-    data = info['data']
-    time = []
-
-    for i in range(len(data)):
-        time.append(data[i]['date'])
-
-    intraday = dict(zip(time, data))
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={ticker}&interval=1min&apikey=75NGNLOY2P6P3HT4'
+    response = get(url)
+    info = response.json()
+    data = info['Time Series (1min)']
+    intraday = []
+    for cur_key, cur_value in data.items():
+        date_obj = datetime.strptime(cur_key, '%Y-%m-%d %H:%M:%S')
+        cur_value.update({'date': datetime.strftime(date_obj, '%Y-%m-%d %H:%M')})
+        cur_value['open'] = float(cur_value.pop('1. open'))
+        cur_value['high'] = float(cur_value.pop('2. high'))
+        cur_value['low'] = float(cur_value.pop('3. low'))
+        cur_value['last'] = float(cur_value.pop('4. close'))
+        cur_value['volume'] = float(cur_value.pop('5. volume'))
+        intraday.append(cur_value)
 
     return intraday
 
@@ -104,7 +117,3 @@ def Overview(ticker):
 #     # Overview('LGHL')
 #     # Quote('LGHL')
 #     # RealTimeData('AAPL')
-
-
-# if __name__ == '__main__':
-#     grab_stock_info('AAPL')

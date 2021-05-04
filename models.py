@@ -69,16 +69,10 @@ class StockInfo:
             self.Values = []
             self.volumes = []
 
-            intraday_values = []
-            for value in intraday.values():
-                intraday_values.append(value)
-            intraday = intraday_values
-
-            for d in range(len(intraday)):
-                if intraday[d]['last']:
-                    self.Dates.append(intraday[d]['date'])
-                    self.Values.append(intraday[d]['last'])
-                    self.volumes.append(intraday[d]['volume'])
+            for cur in intraday:
+                self.Dates.append(cur['date'])
+                self.Values.append(cur['last'])
+                self.volumes.append(cur['volume'])
 
             self.Dates.reverse()
             self.Values.reverse()

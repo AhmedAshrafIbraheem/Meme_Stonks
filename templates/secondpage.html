@@ -30,14 +30,35 @@
                             borderColor: "#277A2B",
                             fill: false
                           },
-
                         ]
                       },
                       options: {
                         title: {
                           display: true,
-                          text: '{{ data.symbol }}'
-                        }
+                          text: '{{ data.symbol }}',
+                          fontColor: 'white'
+                        },
+                        legend: {
+                            labels: {
+                                fontColor: 'white' //set your desired color
+                            }
+                        },
+                        hover: {
+                          mode: 'nearest',
+                          intersect: true
+                        },
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              fontColor: 'white'
+                            }
+                          }],
+                          xAxes: [{
+                            ticks: {
+                              fontColor: 'white'
+                            }
+                          }]
+                        },
                       }
                    });
                 </script>
@@ -135,6 +156,11 @@
                           mode: 'index',
                           intersect: false,
                         },
+                        legend: {
+                            labels: {
+                                fontColor: 'white' //set your desired color
+                            }
+                        },
                         hover: {
                           mode: 'nearest',
                           intersect: true
@@ -145,12 +171,14 @@
                               autoSkip: false,
                               beginAtZero: true,
                               max: 100,
-                              stepSize: 20
+                              stepSize: 20,
+                              fontColor: 'white'
                             }
                           }],
                           xAxes: [{
                             ticks: {
-                              autoSkip: false
+                              autoSkip: false,
+                              fontColor: 'white'
                             }
                           }]
                         },
@@ -194,7 +222,6 @@
                                 label: "Average",
                                 borderColor: "#f5001b",
                                 fill: false
-
                             },
 
                         ]
@@ -202,8 +229,30 @@
                     options: {
                         title: {
                             display: true,
-                            text: '{{ Symbol }}'
-                        }
+                            text: '{{ Symbol }}',
+                            fontColor: 'white'
+                        },
+                        legend: {
+                            labels: {
+                                fontColor: 'white' //set your desired color
+                            }
+                        },
+                        hover: {
+                          mode: 'nearest',
+                          intersect: true
+                        },
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              fontColor: 'white'
+                            }
+                          }],
+                          xAxes: [{
+                            ticks: {
+                              fontColor: 'white'
+                            }
+                          }]
+                        },
                     }
                 });
             </script>
