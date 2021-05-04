@@ -67,7 +67,7 @@ class StockInfo:
             intraday = info['intraday']
             self.Dates = []
             self.Values = []
-            volumes = []
+            self.volumes = []
 
             intraday_values = []
             for value in intraday.values():
@@ -78,12 +78,14 @@ class StockInfo:
                 if intraday[d]['last']:
                     self.Dates.append(intraday[d]['date'])
                     self.Values.append(intraday[d]['last'])
-                    volumes.append(intraday[d]['volume'])
+                    self.volumes.append(intraday[d]['volume'])
 
             self.Dates.reverse()
             self.Values.reverse()
+            self.volumes.reverse()
 
-            self.avg_vol = sum(volumes) // len(volumes)
+            self.avg_vol = sum(self.volumes) // len(self.volumes)
+            self.vol_Average = [self.avg_vol] * len(self.volumes)
             self.avg_price = sum(self.Values) / len(self.Values)
             self.avg_price = round(self.avg_price, 3)
 

@@ -167,19 +167,20 @@
 
     <h5 class="section-title"> Volume x Average Volume Chart</h5>
 
+            {% if data.Dates %}
             <canvas id="average-volume-chart" width="800" height="450"></canvas>
             <script>
                 new Chart(document.getElementById("average-volume-chart"), {
                     type: 'line',
                     data: {
-                        labels: [{% for date in Dates %}
+                        labels: [{% for date in data.Dates %}
                             "{{ date }}",
                         {% endfor %}
 
                         ],
                         datasets: [
                             {
-                                data: [{% for value in Values %}
+                                data: [{% for value in data.volumes %}
                                     {{ value }},
                                 {% endfor %}],
                                 label: "Volume",
@@ -187,7 +188,7 @@
                                 fill: false
                             },
                             {
-                                data: [{% for value in Average %}
+                                data: [{% for value in data.vol_Average %}
                                     {{ value }},
                                 {% endfor %}],
                                 label: "Average",
@@ -206,7 +207,9 @@
                     }
                 });
             </script>
-
+            {% else %}
+            <h6>Not Enough Data!!!! Sorry About That</h6>
+            {% endif %}
 
         </div>
     </div>

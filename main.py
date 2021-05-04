@@ -43,15 +43,10 @@ def stock_data(ticker: str):
     data = get_ticker_data(ticker)
     
     if not data:
-        flash("Wrong Ticker Format")
+        flash("Ticker Not Found in Our System")
         return redirect(url_for("index"))
 
-    Dates = ["2021-04-14", "2021-04-15", "2021-04-16", "2021-04-19", "2021-04-20", "2021-04-21", "2021-04-22"]
-    Values = [5214710, 10520214, 4658608, 3812845, 4658608, 3812845, 4321663]
-    Average = [5285641, 5285641, 5285641, 5285641, 5285641, 5285641, 5285641]
-
-
-    return render_template('secondpage.html', data=data, Dates=Dates, Values=Values, Average=Average)
+    return render_template('secondpage.html', data=data)
 
 
 @app.route('/search', methods=['POST'])
@@ -66,7 +61,7 @@ def search_stock():
     data = search_ticker(ticker)
 
     if not data:
-        flash("Wrong Ticker Format")
+        flash("Ticker Not Found")
         return redirect(url_for("index"))
 
     return render_template('secondpage.html', data=data)
