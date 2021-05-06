@@ -152,7 +152,7 @@ def google_trends(ticker):
 ### TWITTER ################################################
 ############################################################
 # ...
-def twitter(tickers):
+def twitter(ticker):
     # login stuff:
     consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
     consumer_secret = 'gs0w56HCcSwuWJEyVKXL0ywv9ibE1R98ZomPUyDSbtl7kDy4sv'
@@ -170,7 +170,6 @@ def twitter(tickers):
         print("Error during authentication\n\n\n")
 
     # Pre-loop prep (keep preprocess_tweets below stop_words:
-    tickers_dict = {}
     nltk.download('stopwords')
     nltk.download('wordnet')
     stop_words = stopwords.words('english')
@@ -189,26 +188,22 @@ def twitter(tickers):
         return preprocessed_tweet
 
 
-    # loops through tickers and passes data into dictionary
-    for xx in tickers:
-        print(xx)
-        custom_stopwords = ['RT']       # add to if necessary
-        query = tweepy.Cursor(api.search,
-                      q=xx,
-                      lang="en",).items(100)        # removed since...
-        tweets = [{'Tweets': tweet.text, 'Timestamp': tweet.created_at} for tweet in query]
-        df = pd.DataFrame.from_dict(tweets)
-        df['Processed Tweet'] = df['Tweets'].apply(lambda x: preprocess_tweets(x, custom_stopwords))
+    custom_stopwords = ['RT']       # add to if necessary
+    query = tweepy.Cursor(api.search,
+                  q=ticker,
+                  lang="en",).items(100)        # removed since...
+    tweets = [{'Tweets': tweet.text, 'Timestamp': tweet.created_at} for tweet in query]
+    df = pd.DataFrame.from_dict(tweets)
+    df['Processed Tweet'] = df['Tweets'].apply(lambda x: preprocess_tweets(x, custom_stopwords))
 
-        # calculate sentiment
-        df['polarity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[0])
-        df['subjectivity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[1])
-        df.drop(df.columns[[0, 1, 2]], axis=1, inplace=True)
-        tickers_dict.update({xx: [df['polarity'].mean(), df['subjectivity'].mean()]})
-        sleep(2)
-        # end for loop
+    # calculate sentiment
+    df['polarity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[0])
+    df['subjectivity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[1])
+    df.drop(df.columns[[0, 1, 2]], axis=1, inplace=True)
+    ticker_dict = {ticker: [df['polarity'].mean(), df['subjectivity'].mean()]}
+    sleep(1)
 
-    return tickers_dict
+    return ticker_dict
 # END twitter
 
 
