@@ -3,7 +3,11 @@
 from time import sleep
 import pandas as pd
 from pytrends.request import TrendReq
-
+import tweepy
+import nltk
+from nltk.corpus import stopwords       #import stopwords
+from textblob import Word, TextBlob
+import re
 
 ############################################################
 #
@@ -144,46 +148,67 @@ def google_trends(ticker):
 
 
 ############################################################
-# should be run once every 10 minutes (same time as marketwatch scraper)...
+# ...
 ### TWITTER ################################################
 ############################################################
 # ...
-def twitter():
-    # consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
-    # consumer_secret = 'gs0w56HCcSwuWJEyVKXL0ywv9ibE1R98ZomPUyDSbtl7kDy4sv'
-    # access_token = '1371241350746755074-zbpTUM7DqzTxie9tJ5VOvbVYSZ1CAI'
-    # access_token_secret = '9EazuwZG4XEnBR5eInRBqE1BzpEV72iJLoF8OzGzZBBnT'
-    #
-    # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    # auth.set_access_token(access_token, access_token_secret)
-    # api = tweepy.API(auth, wait_on_rate_limit=True)
-    #
-    # try:
-    #     api.verify_credentials()
-    #     print("Authentication OK")
-    # except:
-    #     print("Error during authentication\n\n\n")
-    #
-    # #trends
-    # trends_result = api.trends_place(1)
-    # for trend in trends_result[0]["trends"]:
-    #     print(trend["name"])
-    #
-    # print('\n')
-    #
-    # #cursor
-    # # Collect tweets
-    # search_words = "gme"
-    # date_since = "2021-03-27"
-    # tweets = tweepy.Cursor(api.search,
-    #               q=search_words,
-    #               lang="en",
-    #               since=date_since).items(100)
-    #
-    # # Iterate and print tweets
-    # for tweet in tweets:
-    #     print(tweet.text)
-    pass
+def twitter(tickers):
+    # login stuff:
+    consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
+    consumer_secret = 'gs0w56HCcSwuWJEyVKXL0ywv9ibE1R98ZomPUyDSbtl7kDy4sv'
+    access_token = '1371241350746755074-zbpTUM7DqzTxie9tJ5VOvbVYSZ1CAI'
+    access_token_secret = '9EazuwZG4XEnBR5eInRBqE1BzpEV72iJLoF8OzGzZBBnT'
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth, wait_on_rate_limit=True)
+
+    # error checking
+    try:
+        api.verify_credentials()
+        print("Authentication OK")
+    except:
+        print("Error during authentication\n\n\n")
+
+    # Pre-loop prep (keep preprocess_tweets below stop_words:
+    tickers_dict = {}
+    nltk.download('stopwords')
+    nltk.download('wordnet')
+    stop_words = stopwords.words('english')
+
+    # Removes stop words from each tweet as well as lemmatizing the words too
+    # this function must sit below stop_words
+    def preprocess_tweets(tweet, custom_stop_words):
+        preprocessed_tweet = tweet
+        preprocessed_tweet = re.sub('#\w+:?', '', preprocessed_tweet)
+        preprocessed_tweet = re.sub('@\w+:?', '', preprocessed_tweet)
+        preprocessed_tweet = re.sub('https?://[\w:\.\$\/_-]+', '', preprocessed_tweet)
+        preprocessed_tweet.replace('[^\w\s]', '')
+        preprocessed_tweet = " ".join(word for word in preprocessed_tweet.split() if word not in stop_words)
+        preprocessed_tweet = " ".join(word for word in preprocessed_tweet.split() if word not in custom_stop_words)
+        preprocessed_tweet = " ".join(Word(word).lemmatize() for word in preprocessed_tweet.split())
+        return preprocessed_tweet
+
+
+    # loops through tickers and passes data into dictionary
+    for xx in tickers:
+        print(xx)
+        custom_stopwords = ['RT']       # add to if necessary
+        query = tweepy.Cursor(api.search,
+                      q=xx,
+                      lang="en",).items(100)        # removed since...
+        tweets = [{'Tweets': tweet.text, 'Timestamp': tweet.created_at} for tweet in query]
+        df = pd.DataFrame.from_dict(tweets)
+        df['Processed Tweet'] = df['Tweets'].apply(lambda x: preprocess_tweets(x, custom_stopwords))
+
+        # calculate sentiment
+        df['polarity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[0])
+        df['subjectivity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[1])
+        df.drop(df.columns[[0, 1, 2]], axis=1, inplace=True)
+        tickers_dict.update({xx: [df['polarity'].mean(), df['subjectivity'].mean()]})
+        sleep(2)
+        # end for loop
+
+    return tickers_dict
 # END twitter
 
 
