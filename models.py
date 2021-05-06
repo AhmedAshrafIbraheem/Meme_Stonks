@@ -83,14 +83,29 @@ class StockInfo:
             self.avg_price = sum(self.Values) / len(self.Values)
             self.avg_price = round(self.avg_price, 3)
 
-        social = info['social']
-        self.social_dates = []
-        self.social_values = []
-        for key in social:
-            self.social_dates.append(key)
-            self.social_values.append(social[key])
-        self.social_dates.reverse()
-        self.social_values.reverse()
+        google_trends = info['google']
+        self.google_dates = []
+        self.google_values = []
+        for key in google_trends:
+            self.google_dates.append(key)
+            self.google_values.append(google_trends[key])
+        self.google_dates.reverse()
+        self.google_values.reverse()
 
-        self.week_avg = sum(self.social_values) / len(self.social_values)
-        self.last_2_days_avg = (self.social_values[-1] + self.social_values[-2]) / 2
+        google_week_avg = sum(self.google_values) / len(self.google_values)
+        google_last_2_days_avg = (self.google_values[-1] + self.google_values[-2]) / 2
+
+        self.recommendation = ''
+        if google_week_avg < 30:
+            self.recommendation = 'Not Recommended'
+        elif google_last_2_days_avg > (1.5 * google_week_avg):
+            self.recommendation = 'Recommended!!'
+        elif google_week_avg > 60:
+            self.recommendation = 'Might be late ...'
+        else:
+            self.recommendation = 'Watch Closely'
+
+        twitter = info['twitter']
+        print(twitter)  # example output: {'ROOT': [0.021676136363636366, 0.27894128787878786]}
+
+

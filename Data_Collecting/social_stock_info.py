@@ -207,13 +207,8 @@ def twitter(ticker):
 # END twitter
 
 
-# TODO: Twitter code to be written here returned as a dictionary
 def get_social_stock_info(ticker):
-    pass
-
-
-def test():
-    pass
+    return {'twitter': twitter(ticker), 'google': google_trends(ticker)}
 
 
 def print_hi(name):

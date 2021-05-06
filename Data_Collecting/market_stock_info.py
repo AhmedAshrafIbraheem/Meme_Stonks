@@ -5,12 +5,12 @@ from datetime import datetime
 def grab_stock_info(ticker):
     info = dict()
     intraday = Intraday(ticker)
-    daily = Daily(ticker)
+    # daily = Daily(ticker)
     overview = Overview(ticker)
 
     info['Symbol'] = ticker
     info['intraday'] = intraday
-    info['daily'] = daily
+    # info['daily'] = daily
     info['overview'] = overview
 
     return info
