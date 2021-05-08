@@ -190,7 +190,7 @@ def twitter(ticker):
     custom_stopwords = ['RT']       # add to if necessary
     query = tweepy.Cursor(api.search,
                   q=ticker,
-                  lang="en",).items(100)        # removed since...
+                  lang="en",).items(200)        # removed since...
     tweets = [{'Tweets': tweet.text, 'Timestamp': tweet.created_at} for tweet in query]
     df = pd.DataFrame.from_dict(tweets)
     df['Processed Tweet'] = df['Tweets'].apply(lambda x: preprocess_tweets(x, custom_stopwords))

@@ -177,7 +177,7 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"] {
   display: inline-block;
-  height: 38px;
+  height: 45px;
   padding: 0 30px;
   color: #555;
   text-align: center;
@@ -226,7 +226,7 @@ input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
   color: #FFF;
   background-color: #277a2b;
-  border-color: black; }
+  border-color: white; }
 
 
 /* Forms

@@ -2,21 +2,24 @@
 {% block content %}
     <div class="row spacer_blank">
     </div>
-    <div class="row center_text"> {# TICKER #}
+    <div class="row border1">
+        <div class="row center_text"> {# TICKER #}
         <div class="twelve columns">
             <h2><b style="color: gold">{{ data.symbol }}</b></h2>
         </div>
     </div>
     <div class="row">
-        <div class="four columns">
-            SLAMSTONKS' RECOMMENDATION:
+        <div class="six columns">
+            <b style="color: green">SLAMSTONKS' RECOMMENDATION:</b>
         </div>
-        <div class="eight columns">
+        <div class="six columns center_text">
             <button class="button-primary center_text">
                 {{ data.recommendation }}
             </button>
-            <br><br><br>
         </div>
+            <b style="color: lightslategray">--- ---</b>
+        <br>
+            <text style="color: green">TECHNICALS:</text>
     </div>
     <div class="row"> {# TECHNICALS #}
         <div class="four columns">
@@ -39,18 +42,17 @@
         <div class="four columns">
         </div>
     </div>
+    </div>
     <div class="row spacer_blank"></div>
-    <br>
     <div class="row border1">
         <div class="twelve columns">
             <!-- Slideshow container -->
             <div class="slideshow-container">
               <!-- Full-width images with number and caption text -->
               <div class="mySlides fade">
-                <div class="numbertext">1 / 2</div>
+                <div class="numbertext" style="color: lightslategray">1 / 2</div>
                     <br>
-                    <h5 class="section-title">{{ data.symbol }}: Stock Price Chart</h5>
-
+                    <h5 class="section-title"><b style="color: gold">{{ data.symbol }}</b>: Stock Price Chart</h5>
                     {% if data.Dates %}
                     <canvas id="line-chart"></canvas>
                      <script>
@@ -60,27 +62,26 @@
                         labels: [{% for date in data.Dates %}
                             "{{ date }}",
                             {% endfor %}
-
                         ],
                         datasets: [{
                             data: [{% for value in data.Values %}
                                 {{ value }},
                                 {% endfor %}],
-                            label: "Latest",
+                            label: "{{ data.symbol }}",
                             borderColor: "#277A2B",
-                            fill: false
+                            fill: false,
                           },
                         ]
                       },
                       options: {
                         title: {
-                          display: true,
+                          display: false,
                           text: '{{ data.symbol }}',
                           fontColor: 'white'
                         },
                         legend: {
                             labels: {
-                                fontColor: 'white' //set your desired color
+                                fontColor: 'gold' //set your desired color
                             }
                         },
                         hover: {
@@ -107,9 +108,9 @@
                     {% endif %}
               </div>
               <div class="mySlides fade">
-                <div class="numbertext">2 / 2</div>
+                <div class="numbertext" style="color: lightslategray">2 / 2</div>
                     <br>
-                    <h5 class="section-title"> Volume x Average Volume Chart</h5>
+                    <h5 class="section-title"><b style="color: gold">{{ data.symbol }}</b>: Volume x Average Volume Chart</h5>
                     {% if data.Dates %}
                     <canvas id="average-volume-chart"></canvas>
                     <script>
@@ -138,7 +139,6 @@
                                         borderColor: "#f5001b",
                                         fill: false
                                     },
-
                                 ]
                             },
                             options: {
@@ -189,17 +189,14 @@
         <script>
                 var slideIndex = 1;
                 showSlides(slideIndex);
-
                 // Next/previous controls
                 function plusSlides(n) {
                   showSlides(slideIndex += n);
                 }
-
                 // Thumbnail image controls
                 function currentSlide(n) {
                   showSlides(slideIndex = n);
                 }
-
                 function showSlides(n) {
                   var i;
                   var slides = document.getElementsByClassName("mySlides");
@@ -220,30 +217,28 @@
     <div class="row spacer_blank"></div>
     <div class="row border1">
         <div class="twelve columns">
-            <h5 class="section-title center_text">Sentiment Analysis</h5>
+            <h5 class="section-title center_text" style="color: green">Sentiment Analysis</h5>
             <p>
                 After calculating <b style="color: gold">{{ data.symbol }}'s</b> sentiment analysis on <b style="color: #1EAEDB">Twitter</b> conversations, we have concluded that <b style="color: gold">{{ data.symbol }}</b> is being talked about <span title="Priority: {{ data.priority }}">{% if data.priority > 0 %}<u style="color: chartreuse">{{ data.priority_rec }}</u>{% else %}<u style="color: orangered">{{ data.priority_rec }}</u>{% endif %}</span> and the nature of the conversation leans towards being <span title="Subjectivity: {{ data.subjectivity }}">{% if data.subjectivity > 0.49 %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% else %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% endif %}</span>.
             </p>
-            <br>
+            <p class="center_text" style="color: lightslategrey">
+                - - - - - - - - - - - - - - - - - - - -
+            </p>
             <p class="center_text"> <!-- -->
                 <b style="color: gold">{{ data.symbol }}'s</b> search engagement on <b style="color: dodgerblue">G</b><b style="color: red">o</b><b style="color: yellow">o</b><b style="color: dodgerblue">g</b><b style="color: limegreen">l</b><b style="color: red">e</b>.com for the past week:
             </p>
-            <br>
             <canvas id="s_a_chart"></canvas>
             <script>
                 var ctx = document.getElementById("s_a_chart");
-
                 var label_dates = [];
                 {% for item in data.google_dates %}
                     label_dates.push("{{ item }}");
                 {% endfor %}
                 label_dates[label_dates.length - 1] = "Today";
-
                 var label_values = [];
                 {% for item in data.google_values %}
                     label_values.push("{{ item }}");
                 {% endfor %}
-
                 var s_a_chart = new Chart(ctx, {
                     type: 'line',
                     data: {
@@ -302,6 +297,5 @@
             </script>
         </div>
     </div>
-
 <div class="row spacer_blank"></div>
 {% endblock %}

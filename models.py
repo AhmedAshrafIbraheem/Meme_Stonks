@@ -32,7 +32,6 @@ def get_chart_analysis():
     legend = 'Monthly Data'
     the_date = list(google_trends[tickers[0]].keys())
     the_date.reverse()
-
     return {'legend': legend, 'the_date': the_date, 'tickers': tickers,
             'nested_dictionaries': google_trends, 'twitter': twitter}
 
@@ -99,8 +98,8 @@ class StockInfo:
 
         twitter = info['twitter']
         self.key = list(twitter)[0]
-        self.priority = round(twitter.get(self.key)[0], 3)
-        self.subjectivity = round(twitter.get(self.key)[1], 3)
+        self.priority = round(twitter.get(self.key)[0], 2)
+        self.subjectivity = round(twitter.get(self.key)[1], 2)
 
         self.counter = 0
 

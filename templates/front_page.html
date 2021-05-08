@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-
     {% for message in get_flashed_messages() %}
         <p style="text-align: center; display: block; padding: 20px;
                   border-left: 5px solid; background-color: #D6EAF8;
@@ -18,7 +17,7 @@
     </div>
     <div class="row">
         <div class="twelve columns">
-            <p><h3 class="centered_header text_color_green">TOP TEN SHORTED STOCK WATCHLIST</h3></p>
+            <p><h4 class="centered_header text_color_green">TOP TEN SHORTED STOCK WATCHLIST</h4></p>
         </div>
     </div>
     <div class="row border1">
@@ -40,16 +39,18 @@
         {% endfor %}
     </div>
     <div class="spacer_blank"></div>
-    <div class="spacer"></div>
-    <div class="row">
+    <div class="row border1">
         <div class="twelve columns">
-            <p><h3 class="centered_header text_color_green">TOP TEN STOCK ENGAGEMENT PERFORMANCE CHART</h3></p>
-        </div>
-    </div>
-        <div class="row border1">
-            <div class="twelve columns">
-                <canvas id="myChart"></canvas>
-                <script>
+            <!-- Slideshow container -->
+            <div class="slideshow-container">
+              <!-- Full-width images with number and caption text -->
+              <div class="mySlides fade">
+                <div class="numbertext" style="color: lightslategrey">1 / 2</div>
+                    <br>
+                    <h5 class="section-title" style="color: green">Relative search engagement according to <b style="color: dodgerblue">G</b><b style="color: red">o</b><b style="color: yellow">o</b><b style="color: dodgerblue">g</b><b style="color: limegreen">l</b><b style="color: red">e</b>.com</h5>
+
+                    <canvas id="myChart"></canvas>
+                    <script>
                     var canvas = document.getElementById('myChart');
                     var ctx = canvas.getContext('2d');
 
@@ -390,367 +391,99 @@
                         }
                     });
                 </script>
-{#                <script>#}
-{#                    var canvas = document.getElementById('canvas');#}
-{#                    var ctx = canvas.getContext('2d');#}
-{##}
-{#                    var myChart = new Chart(ctx, {#}
-{#                       type: 'line',#}
-{#                       data: {#}
-{#                          labels: ["2010", "2011", "2012", "2013"],#}
-{#                          datasets: [{#}
-{#                             label: 'Dataset 1',#}
-{#                             data: [150, 200, 250, 150],#}
-{#                             color: "#878BB6",#}
-{#                          }, {#}
-{#                             label: 'Dataset 2',#}
-{#                             data: [250, 100, 150, 10],#}
-{#                             color: "#4ACAB4",#}
-{#                          }]#}
-{#                       }#}
-{#                    });#}
-{#                </script>#}
-{#                <canvas id="myChart"></canvas>#}
-{#                <script>#}
-{#                    var ctx = document.getElementById("myChart");#}
-{##}
-{#                    var myChart = new Chart(ctx, {#}
-{#                        type: 'line',#}
-{#                        data: {#}
-{#                            labels: [ {% for item in the_date %}#}
-{#                                {% if item == the_date[-1] -%}#}
-{#                                    "TODAY",#}
-{#                                {% else -%}#}
-{#                                    "{{ item }}",#}
-{#                                {% endif %}#}
-{#                            {% endfor %} ],#}
-{#                            datasets: [#}
-{#                                {#}
-{#                                    label: "{{ tickers[0] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[0]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[0]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[0]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[0]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[0]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[0]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[0]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[0]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(255, 0, 0, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[1] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[1]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[1]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[1]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[1]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[1]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[1]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[1]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[1]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(255, 128, 0, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[2] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[2]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[2]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[2]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[2]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[2]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[2]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[2]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[2]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(255, 255, 0, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[3] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[3]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[3]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[3]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[3]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[3]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[3]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[3]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[3]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(0, 255, 0, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[4] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[4]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[4]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[4]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[4]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[4]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[4]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[4]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[4]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(0, 255, 255, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[5] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[5]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[5]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[5]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[5]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[5]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[5]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[5]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[5]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(0, 128, 255, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[6] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[6]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[6]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[6]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[6]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[6]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[6]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[6]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[6]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(0, 0, 255, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[7] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[7]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[7]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[7]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[7]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[7]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[7]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[7]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[7]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(127, 0, 255, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[8] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[8]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[8]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[8]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[8]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[8]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[8]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[8]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[8]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(255, 0, 127, 1)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                                {#}
-{#                                    label: "{{ tickers[9] }}",#}
-{#                                    data: [{#}
-{#                                        x: "{{ the_date[0] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[9]][the_date[0]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[1] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[9]][the_date[1]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[2] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[9]][the_date[2]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[3] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[9]][the_date[3]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[4] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[9]][the_date[4]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[5] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[9]][the_date[5]] }}#}
-{#                                    }, {#}
-{#                                        x: "{{ the_date[6] }}",#}
-{#                                        y: {{ nested_dictionaries[tickers[9]][the_date[6]] }}#}
-{#                                    }, {x: "{{ the_date[7] }}", y: {{ nested_dictionaries[tickers[9]][the_date[7]] }}}],#}
-{#                                    showLine: true,#}
-{#                                    fill: false,#}
-{#                                    borderColor: 'rgba(127, 127, 127, 127)',#}
-{#                                    lineTension: 0#}
-{#                                },#}
-{#                            ]#}
-{#                        },#}
-{#                        options: {#}
-{#                            tooltips: {#}
-{#                                mode: 'index',#}
-{#                                intersect: false,#}
-{#                            },#}
-{#                            legend: {#}
-{#                                labels: {#}
-{#                                    fontColor: 'white' //set your desired color#}
-{#                                }#}
-{#                            },#}
-{#                            hover: {#}
-{#                                mode: 'nearest',#}
-{#                                intersect: true#}
-{#                            },#}
-{#                            scales: {#}
-{#                                yAxes: [{#}
-{#                                    ticks: {#}
-{#                                        autoSkip: false,#}
-{#                                        beginAtZero: true,#}
-{#                                        stepSize: 20,#}
-{#                                        suggestedMax: 100,#}
-{#                                        fontColor: 'white',#}
-{#                                    }#}
-{#                                }],#}
-{#                                xAxes: [{#}
-{#                                    ticks: {#}
-{#                                        autoSkip: false,#}
-{#                                        fontColor: 'white',#}
-{#                                    }#}
-{#                                }]#}
-{#                            },#}
-{#                        }#}
-{#                    });#}
-{#                </script>#}
+              </div>
+              <div class="mySlides fade">
+                <div class="numbertext" style="color: lightslategrey">2 / 2</div>
+                    <br>
+                    <h5 class="section-title" style="color: green">Stock sentiment analysis comparison:</h5>
+
+                    <canvas id="bar-chart"></canvas>
+                    <script>
+                        var canvas = document.getElementById('bar-chart');
+                        var ctx = canvas.getContext('2d');
+                        var myChart = new Chart(document.getElementById("bar-chart"), {
+                            type: 'bar',
+                            data: {
+                              labels: [ {% for key in tickers %}
+                                  "{{ key }}",
+                              {% endfor %} ],
+                              datasets: [
+                                {
+                                  label: "Population (millions)",
+                                  backgroundColor: ["#FF0000", "#FF8000","#FFFF00","#00FF00","#00FFFF", "#0080FF", "#0000FF","#7F00FF","#FF007F","#7F7F7F"],
+                                  data: [ {% for item in priority_value_list %}
+                                    "{{ item }}",
+                                  {% endfor %} ]
+                                }
+                              ]
+                            },
+                            options: {
+                              legend: { display: false },
+                              title: {
+                                display: true,
+                                text: 'NEGATIVE OPINION MAX  =  -1                    POSITIVE OPINION MAX  =  1',
+                                fontColor: 'white',
+                              },
+                              scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        autoSkip: false,
+                                        fontColor: 'white',
+                                        suggestedMax: 0.5,
+                                        suggestedMin: -0.25,
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        autoSkip: false,
+                                        fontColor: 'white',
+                                    }
+                                }]
+                            },
+                            }
+                        });
+                    </script>
+
+              </div>
+              <!-- Next and previous buttons -->
+              <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+              <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
             </div>
         </div>
+        <script>
+                var slideIndex = 1;
+                showSlides(slideIndex);
+                // Next/previous controls
+                function plusSlides(n) {
+                  showSlides(slideIndex += n);
+                }
+                // Thumbnail image controls
+                function currentSlide(n) {
+                  showSlides(slideIndex = n);
+                }
+                function showSlides(n) {
+                  var i;
+                  var slides = document.getElementsByClassName("mySlides");
+                  var dots = document.getElementsByClassName("dot");
+                  if (n > slides.length) {slideIndex = 1}
+                  if (n < 1) {slideIndex = slides.length}
+                  for (i = 0; i < slides.length; i++) {
+                      slides[i].style.display = "none";
+                  }
+                  for (i = 0; i < dots.length; i++) {
+                      dots[i].className = dots[i].className.replace(" active", "");
+                  }
+                  slides[slideIndex-1].style.display = "block";
+                  dots[slideIndex-1].className += " active";
+                }
+            </script>
+            </div>
+        </div>
+    </div>
 {% endblock %}

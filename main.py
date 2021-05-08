@@ -29,9 +29,17 @@ def internal_server_error(error):
 def index():
     data = get_analysis()
     chart = get_chart_analysis()
+    twitter_list_of_dicts = chart['twitter']
+    typee = type(twitter_list_of_dicts)
+    temp_list = []
+    priority_value_list = []
+    for xx in twitter_list_of_dicts:
+        temp_list.append(list(xx.values())[0])
+    for xx in temp_list:
+        priority_value_list.append(xx[0])
     return render_template('front_page.html', data=data, legend=chart['legend'], the_date=chart['the_date'],
                            tickers=chart['tickers'], nested_dictionaries=chart['nested_dictionaries'],
-                           twitter=chart['twitter'])
+                           twitter=chart['twitter'], twitter_dict_of_dicts=twitter_list_of_dicts, priority_value_list=priority_value_list)
 
 
 @app.route('/stock/<string:ticker>', methods=['GET'])
