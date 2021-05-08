@@ -21,18 +21,20 @@ def get_analysis():
 def get_chart_analysis():
     my_client = MongoClient(server_link)
     my_db = my_client[database_name]
-    col_google_trends = my_db['GoogleTrends']
+    col_sentiment = my_db['Sentiment']
     my_client.server_info()
-    google_trends = col_google_trends.find_one(sort=[('_id', DESCENDING)])
+    sentiment = col_sentiment.find_one(sort=[('_id', DESCENDING)])['Sentiment']
     my_client.close()
 
-    google_trends = google_trends['GoogleTrends']
+    twitter = sentiment['Twitter']
+    google_trends = sentiment['GoogleTrends']
     tickers = list(google_trends.keys())
     legend = 'Monthly Data'
     the_date = list(google_trends[tickers[0]].keys())
     the_date.reverse()
 
-    return {'legend': legend, 'the_date': the_date, 'tickers': tickers, 'nested_dictionaries': google_trends}
+    return {'legend': legend, 'the_date': the_date, 'tickers': tickers,
+            'nested_dictionaries': google_trends, 'twitter': twitter}
 
 
 def get_ticker_data(ticker):
@@ -155,7 +157,5 @@ class StockInfo:
             self.recommendation = 'VERY UNLIKELY...'
         else:
             self.recommendation = 'DEAD END. MOVE ON.'
-
-        print(twitter)  # example output: {'ROOT': [0.021676136363636366, 0.27894128787878786]}
 
 

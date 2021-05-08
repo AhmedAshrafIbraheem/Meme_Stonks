@@ -187,7 +187,6 @@ def twitter(ticker):
         preprocessed_tweet = " ".join(Word(word).lemmatize() for word in preprocessed_tweet.split())
         return preprocessed_tweet
 
-
     custom_stopwords = ['RT']       # add to if necessary
     query = tweepy.Cursor(api.search,
                   q=ticker,

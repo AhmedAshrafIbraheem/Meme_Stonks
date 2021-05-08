@@ -30,7 +30,8 @@ def index():
     data = get_analysis()
     chart = get_chart_analysis()
     return render_template('front_page.html', data=data, legend=chart['legend'], the_date=chart['the_date'],
-                           tickers=chart['tickers'], nested_dictionaries=chart['nested_dictionaries'])
+                           tickers=chart['tickers'], nested_dictionaries=chart['nested_dictionaries'],
+                           twitter=chart['twitter'])
 
 
 @app.route('/stock/<string:ticker>', methods=['GET'])

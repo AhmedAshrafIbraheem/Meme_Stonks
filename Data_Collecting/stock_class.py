@@ -1,9 +1,3 @@
-
-def compare_stocks(stock1, stock2) -> int:
-    # returns 0, 1 or -1
-    return 0
-
-
 class StockData:
 
     def __init__(self, info: {}):
