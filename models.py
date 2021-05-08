@@ -2,7 +2,7 @@ from pymongo import MongoClient, DESCENDING
 
 # sudo systemctl start mongod
 from Data_Collecting.market_stock_info import grab_stock_info
-from Data_Collecting import social_stock_info
+from Data_Collecting.social_stock_info import get_social_stock_info
 
 server_link = 'mongodb://localhost:27017/'
 database_name = 'SlamStonks'
@@ -48,8 +48,8 @@ def get_ticker_data(ticker):
 
 def search_ticker(ticker):
     data = grab_stock_info(ticker)
-    social_info = social_stock_info.google_trends(ticker)
-    data['social'] = social_info
+    social_info = get_social_stock_info(ticker)
+    data.update(social_info)
 
     return StockInfo(data) if data['overview'] else None
 

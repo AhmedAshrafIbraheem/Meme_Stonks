@@ -46,20 +46,21 @@ def Intraday(ticker):
     url = f'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={ticker}&interval=1min&apikey=75NGNLOY2P6P3HT4'
     response = get(url)
     info = response.json()
-    data = info['Time Series (1min)']
-    intraday = []
-    for cur_key, cur_value in data.items():
-        date_obj = datetime.strptime(cur_key, '%Y-%m-%d %H:%M:%S')
-        cur_value.update({'date': datetime.strftime(date_obj, '%Y-%m-%d %H:%M')})
-        cur_value['open'] = float(cur_value.pop('1. open'))
-        cur_value['high'] = float(cur_value.pop('2. high'))
-        cur_value['low'] = float(cur_value.pop('3. low'))
-        cur_value['last'] = float(cur_value.pop('4. close'))
-        cur_value['volume'] = float(cur_value.pop('5. volume'))
-        intraday.append(cur_value)
+    if 'Time Series (1min)' in info:
+        data = info['Time Series (1min)']
+        intraday = []
+        for cur_key, cur_value in data.items():
+            date_obj = datetime.strptime(cur_key, '%Y-%m-%d %H:%M:%S')
+            cur_value.update({'date': datetime.strftime(date_obj, '%Y-%m-%d %H:%M')})
+            cur_value['open'] = float(cur_value.pop('1. open'))
+            cur_value['high'] = float(cur_value.pop('2. high'))
+            cur_value['low'] = float(cur_value.pop('3. low'))
+            cur_value['last'] = float(cur_value.pop('4. close'))
+            cur_value['volume'] = float(cur_value.pop('5. volume'))
+            intraday.append(cur_value)
 
-    return intraday
-
+        return intraday
+    return None
     # for key, value in final.items():
     #     print(f'{key} -- {value}')
 
