@@ -95,17 +95,67 @@ class StockInfo:
         google_week_avg = sum(self.google_values) / len(self.google_values)
         google_last_2_days_avg = (self.google_values[-1] + self.google_values[-2]) / 2
 
-        self.recommendation = ''
-        if google_week_avg < 30:
-            self.recommendation = 'Not Recommended'
-        elif google_last_2_days_avg > (1.5 * google_week_avg):
-            self.recommendation = 'Recommended!!'
-        elif google_week_avg > 60:
-            self.recommendation = 'Might be late ...'
-        else:
-            self.recommendation = 'Watch Closely'
-
         twitter = info['twitter']
+        self.key = list(twitter)[0]
+        self.priority = round(twitter.get(self.key)[0], 3)
+        self.subjectivity = round(twitter.get(self.key)[1], 3)
+
+        self.counter = 0
+
+        self.priority_rec = ''
+        if self.priority > 0.74:
+            self.priority_rec = 'EXTREMELY POSITIVELY'
+            self.counter += 8
+        elif 0.75 > self.priority > 0.49:
+            self.priority_rec = 'VERY POSITIVELY'
+            self.counter += 7
+        elif 0.50 > self.priority > 0.24:
+            self.priority_rec = 'POSITIVELY'
+            self.counter += 6
+        elif 0.25 > self.priority > 0:
+            self.priority_rec = 'a LITTLE POSITIVELY'
+            self.counter += 5
+        elif 0 > self.priority > -0.25:
+            self.priority_rec = 'a LITTLE NEGATIVELY'
+            self.counter += 4
+        elif -0.24 > self.priority > -0.50:
+            self.priority_rec = 'NEGATIVELY'
+            self.counter += 3
+        elif -0.49 > self.priority > -0.75:
+            self.priority_rec = 'VERY  NEGATIVELY'
+            self.counter += 1
+        else:
+            self.priority_rec = 'EXTREMELY NEGATIVELY'
+
+        self.subjectivity_rec = ''
+        if self.subjectivity > 0.74:
+            self.subjectivity_rec = 'IRRATIONAL and generally without any facts'
+            self.counter += 2
+        elif 0.75 > self.subjectivity > 0.49:
+            self.subjectivity_rec = 'SOMEWHAT IRRATIONAL with little basis in fact'
+        elif 0.50 > self.subjectivity > 0.24:
+            self.subjectivity_rec = 'SOMEWHAT FACTUAL with little emotion'
+        else:
+            self.subjectivity_rec = 'RATIONAL and with no emotion'
+            self.counter += 2
+
+        if google_last_2_days_avg > (1.5 * google_week_avg):
+            self.counter += 4
+        elif google_week_avg > 60:
+            self.counter += 1
+        else:
+            self.counter += 2
+
+        self.recommendation = ''
+        if self.counter > 12:
+            self.recommendation = 'IT\'S A SLAMMER!!!'
+        elif 13 > self.counter > 9:
+            self.recommendation = 'WATCH CLOSELY...'
+        elif 9 > self.counter > 5:
+            self.recommendation = 'VERY UNLIKELY...'
+        else:
+            self.recommendation = 'DEAD END. MOVE ON.'
+
         print(twitter)  # example output: {'ROOT': [0.021676136363636366, 0.27894128787878786]}
 
 

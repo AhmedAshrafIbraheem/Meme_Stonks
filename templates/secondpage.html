@@ -1,18 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="row">
+    <div class="row spacer_blank">
+    </div>
+    <div class="row center_text"> {# TICKER #}
         <div class="twelve columns">
-            <p><h3 class="centered_header text_color_green">Intraday: Price</h3></p>
+            <h2><b style="color: gold">{{ data.symbol }}</b></h2>
         </div>
     </div>
+    <div class="row">
+        <div class="four columns">
+            SLAMSTONKS' RECOMMENDATION:
+        </div>
+        <div class="eight columns">
+            <button class="button-primary center_text">
+                {{ data.recommendation }}
+            </button>
+            <br><br><br>
+        </div>
+    </div>
+    <div class="row"> {# TECHNICALS #}
+        <div class="four columns">
+            <strong>Average Price:</strong> <i style="float: right">${{ data.avg_price }}</i>
+        </div>
+        <div class="four columns">
+            <strong>Average Volume:</strong> <i style="float: right">{{ data.avg_vol }}</i>
+        </div>
+        <div class="four columns">
+            <strong>Market Capitalization:</strong><br><i>{{ data.market_cap }}</i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="four columns">
+            <strong>52 Week High:</strong> <i style="float: right;color: chartreuse">${{ data.fiftytwo_week_high }}</i>
+        </div>
+        <div class="four columns">
+            <strong>52 Week Low:</strong> <i style="float: right;color: red">${{ data.fiftytwo_week_low }}</i>
+        </div>
+        <div class="four columns">
+        </div>
+    </div>
+    <div class="row spacer_blank"></div>
+    <br>
     <div class="row border1">
-        <div class="row">
-            <div class="twelve columns">
-                <div class="center-col">
+        <div class="twelve columns">
+            <!-- Slideshow container -->
+            <div class="slideshow-container">
+              <!-- Full-width images with number and caption text -->
+              <div class="mySlides fade">
+                <div class="numbertext">1 / 2</div>
+                    <br>
                     <h5 class="section-title">{{ data.symbol }}: Stock Price Chart</h5>
 
                     {% if data.Dates %}
-                    <canvas id="line-chart" width="800" height="450"></canvas>
+                    <canvas id="line-chart"></canvas>
                      <script>
                    new Chart(document.getElementById("line-chart"), {
                       type: 'line',
@@ -65,46 +105,129 @@
                     {% else %}
                     <h6>Not Enough Data!!!! Sorry About That</h6>
                     {% endif %}
-                </div>
+              </div>
+              <div class="mySlides fade">
+                <div class="numbertext">2 / 2</div>
+                    <br>
+                    <h5 class="section-title"> Volume x Average Volume Chart</h5>
+                    {% if data.Dates %}
+                    <canvas id="average-volume-chart"></canvas>
+                    <script>
+                        new Chart(document.getElementById("average-volume-chart"), {
+                            type: 'line',
+                            data: {
+                                labels: [{% for date in data.Dates %}
+                                    "{{ date }}",
+                                {% endfor %}
+
+                                ],
+                                datasets: [
+                                    {
+                                        data: [{% for value in data.volumes %}
+                                            {{ value }},
+                                        {% endfor %}],
+                                        label: "Volume",
+                                        borderColor: "#5dcd3e",
+                                        fill: false
+                                    },
+                                    {
+                                        data: [{% for value in data.vol_Average %}
+                                            {{ value }},
+                                        {% endfor %}],
+                                        label: "Average",
+                                        borderColor: "#f5001b",
+                                        fill: false
+                                    },
+
+                                ]
+                            },
+                            options: {
+                                title: {
+                                    display: true,
+                                    text: '{{ Symbol }}',
+                                    fontColor: 'white'
+                                },
+                                legend: {
+                                    labels: {
+                                        fontColor: 'white' //set your desired color
+                                    }
+                                },
+                                hover: {
+                                  mode: 'nearest',
+                                  intersect: true
+                                },
+                                scales: {
+                                  yAxes: [{
+                                    ticks: {
+                                      fontColor: 'white'
+                                    }
+                                  }],
+                                  xAxes: [{
+                                    ticks: {
+                                      fontColor: 'white'
+                                    }
+                                  }]
+                                },
+                            }
+                        });
+                    </script>
+                    {% else %}
+                    <h6>Not Enough Data!!!! Sorry About That</h6>
+                    {% endif %}
+              </div>
+              <!-- Next and previous buttons -->
+              <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+              <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
             </div>
         </div>
+        <script>
+                var slideIndex = 1;
+                showSlides(slideIndex);
+
+                // Next/previous controls
+                function plusSlides(n) {
+                  showSlides(slideIndex += n);
+                }
+
+                // Thumbnail image controls
+                function currentSlide(n) {
+                  showSlides(slideIndex = n);
+                }
+
+                function showSlides(n) {
+                  var i;
+                  var slides = document.getElementsByClassName("mySlides");
+                  var dots = document.getElementsByClassName("dot");
+                  if (n > slides.length) {slideIndex = 1}
+                  if (n < 1) {slideIndex = slides.length}
+                  for (i = 0; i < slides.length; i++) {
+                      slides[i].style.display = "none";
+                  }
+                  for (i = 0; i < dots.length; i++) {
+                      dots[i].className = dots[i].className.replace(" active", "");
+                  }
+                  slides[slideIndex-1].style.display = "block";
+                  dots[slideIndex-1].className += " active";
+                }
+            </script>
     </div>
     <div class="row spacer_blank"></div>
     <div class="row border1">
-        <div class="five columns">
-            <h5 class="center_text">Stock Technicals</h5>
-            <!--  For Symbol we will use the api to call the Stock Ticker that was clicked on to display the Symbol
-                  Here we will use the api to call the Stock Ticker that was clicked on to display the Company Name -->
-            <button class="button-primary">{{ data.symbol }}</button>
-            <br>
-            <br>
-            <h6><strong>{{ data.name }}</strong></h6>
-            {% if data.avg_price %}
-                <strong>Average</strong> <br>
-                <strong>Price:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;&ensp;${{ data.avg_price }}
-                <br>
-                <br>
-                <strong>Average</strong> <br>
-                <strong>Volume:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&ensp;{{ data.avg_vol }}
-                <br>
-                <br>
-            {% endif %}
-            <strong>Market</strong> <br>
-            <strong>Capitalization:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;{{ data.market_cap }}
-            <br>
-            <br>
-            <strong>52 Week High:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;${{ data.fiftytwo_week_high }}
-            <br>
-            <br>
-            <strong>52 Week Low:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&ensp;&ensp;${{ data.fiftytwo_week_low }}
-            <br>
-            <br>
-        </div>
-        <div class="seven columns">
+        <div class="twelve columns">
             <h5 class="section-title center_text">Sentiment Analysis</h5>
-            <button class="button-primary">
-                {{ data.recommendation }}
-            </button>
+            <p>
+                After calculating <b style="color: gold">{{ data.symbol }}'s</b> sentiment analysis on <b style="color: #1EAEDB">Twitter</b> conversations, we have concluded that <b style="color: gold">{{ data.symbol }}</b> is being talked about <span title="Priority: {{ data.priority }}">{% if data.priority > 0 %}<u style="color: chartreuse">{{ data.priority_rec }}</u>{% else %}<u style="color: orangered">{{ data.priority_rec }}</u>{% endif %}</span> and the nature of the conversation leans towards being <span title="Subjectivity: {{ data.subjectivity }}">{% if data.subjectivity > 0.49 %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% else %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% endif %}</span>.
+            </p>
+            <br>
+            <p class="center_text"> <!-- -->
+                <b style="color: gold">{{ data.symbol }}'s</b> search engagement on <b style="color: dodgerblue">G</b><b style="color: red">o</b><b style="color: yellow">o</b><b style="color: dodgerblue">g</b><b style="color: limegreen">l</b><b style="color: red">e</b>.com for the past week:
+            </p>
             <br>
             <canvas id="s_a_chart"></canvas>
             <script>
@@ -177,85 +300,8 @@
                       }
                     });
             </script>
-
-            <!--ALEX: I think this is where you should add the twitter chart -->
-
         </div>
     </div>
 
 <div class="row spacer_blank"></div>
-<div class="row border1">
-    <div class="row">
-        <div class="twelve columns">
-
-    <h5 class="section-title"> Volume x Average Volume Chart</h5>
-
-            {% if data.Dates %}
-            <canvas id="average-volume-chart" width="800" height="450"></canvas>
-            <script>
-                new Chart(document.getElementById("average-volume-chart"), {
-                    type: 'line',
-                    data: {
-                        labels: [{% for date in data.Dates %}
-                            "{{ date }}",
-                        {% endfor %}
-
-                        ],
-                        datasets: [
-                            {
-                                data: [{% for value in data.volumes %}
-                                    {{ value }},
-                                {% endfor %}],
-                                label: "Volume",
-                                borderColor: "#5dcd3e",
-                                fill: false
-                            },
-                            {
-                                data: [{% for value in data.vol_Average %}
-                                    {{ value }},
-                                {% endfor %}],
-                                label: "Average",
-                                borderColor: "#f5001b",
-                                fill: false
-                            },
-
-                        ]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: '{{ Symbol }}',
-                            fontColor: 'white'
-                        },
-                        legend: {
-                            labels: {
-                                fontColor: 'white' //set your desired color
-                            }
-                        },
-                        hover: {
-                          mode: 'nearest',
-                          intersect: true
-                        },
-                        scales: {
-                          yAxes: [{
-                            ticks: {
-                              fontColor: 'white'
-                            }
-                          }],
-                          xAxes: [{
-                            ticks: {
-                              fontColor: 'white'
-                            }
-                          }]
-                        },
-                    }
-                });
-            </script>
-            {% else %}
-            <h6>Not Enough Data!!!! Sorry About That</h6>
-            {% endif %}
-
-        </div>
-    </div>
-</div>
 {% endblock %}
