@@ -9,3 +9,7 @@ pytrends~=4.7.3
 tweepy~=3.10.0
 nltk~=3.6.2
 textblob~=0.15.3
+
+selenium==3.141.0
+webdriver-manager==3.4.1
+
