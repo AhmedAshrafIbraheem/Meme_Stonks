@@ -47,5 +47,37 @@ def options():
     # print(stock2.text)
     driver.close()
 
+#AHMED: DELETE THIS IF YOU DONT NEED IT OR WHATEVER BOSS
+def test():
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver.get('https://www.barchart.com/options/unusual-activity/stocks')
 
-options()
+    options = []
+
+
+    for i in range(1, 11):
+        info = []
+        stock = driver.find_element_by_xpath(
+            f'//*[@id="main-content-column"]/div[6]/div/div[2]/div/div/ng-transclude/table/tbody/tr[{i}]')
+        data = stock.text.split()
+        info.append(data[0])
+        # Company_Name.append()
+        info.append(data[2])
+        info.append(data[1])
+        info.append(data[3])
+        info.append(data[4])
+        info.append(data[8])
+        info.append(data[10])
+        info.append(data[11])
+        options.append(info)
+
+    print(options)
+    print(options[0])
+    print(options[1])
+    print(options[9])
+
+    # print(stock2.text)
+    driver.close()
+
+
+
