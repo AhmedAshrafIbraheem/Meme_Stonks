@@ -3,9 +3,10 @@ from scraper import scraper
 from analyzer import analyze
 from store_guy import DatabaseInteraction
 from social_stock_info import google_trends_normalized
+from options import options
 
 
-def controller():
+def stocks_controller():
     tickers_list = scraper()
     ordered_list = []
     twitter_data = []
@@ -28,9 +29,15 @@ def controller():
     DatabaseInteraction.get_instance().store_sentiment(sentiment)
 
 
+def options_controller():
+    all_options = options()
+    DatabaseInteraction.get_instance().store_options(all_options)
+
+
 def looper():
     while True:
-        controller()
+        stocks_controller()
+        options_controller()
         # sleep for 10 minutes
         sleep(10 * 60)
 

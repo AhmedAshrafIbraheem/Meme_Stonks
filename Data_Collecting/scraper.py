@@ -17,7 +17,7 @@ def scraper():
     top_10_stocks = []
 
     # the content we want starts a bit after line 675:
-    i = 675;
+    i = 675
     counter = 0
     while i < len(newline_delimited) and counter < 10:
         none_or_match = search("<div class=\"cell__content\">[A-Z]{3,5}</div>", newline_delimited[i])

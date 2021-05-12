@@ -18,6 +18,16 @@ def get_analysis():
     return top10s["Top10"] if top10s else None
 
 
+def get_options():
+    my_client = MongoClient(server_link)
+    my_db = my_client[database_name]
+    options = my_db['Options']
+    my_client.server_info()
+    top10s = options.find_one(sort=[('_id', DESCENDING)])
+    my_client.close()
+    return top10s["Options"]
+
+
 def get_chart_analysis():
     my_client = MongoClient(server_link)
     my_db = my_client[database_name]

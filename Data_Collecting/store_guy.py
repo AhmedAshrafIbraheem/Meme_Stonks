@@ -23,7 +23,12 @@ class DatabaseInteraction:
         self.top10s = self.my_db['Top10s']
         self.stocks = self.my_db['Stocks']
         self.sentiment = self.my_db['Sentiment']
+        self.options = self.my_db['Options']
         self.my_client.server_info()
+
+    def store_options(self, info):
+        self.options.insert_one({"Options": info})
+        print("Options Write is Done")
 
     def store_top10s(self, tickers_list: []):
         to_store = []

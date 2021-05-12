@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from gevent.pywsgi import WSGIServer
-from models import get_analysis, get_ticker_data, get_chart_analysis, search_ticker
+from models import get_analysis, get_ticker_data, get_chart_analysis, search_ticker, get_options
 import os
 
 app = Flask(__name__)
@@ -40,6 +40,12 @@ def index():
     return render_template('front_page.html', data=data, legend=chart['legend'], the_date=chart['the_date'],
                            tickers=chart['tickers'], nested_dictionaries=chart['nested_dictionaries'],
                            twitter=chart['twitter'], twitter_dict_of_dicts=twitter_list_of_dicts, priority_value_list=priority_value_list)
+
+
+@app.route('/options', methods=['GET'])
+def options_page():
+    data = get_options()
+    return render_template('options.html', data=data)
 
 
 @app.route('/stock/<string:ticker>', methods=['GET'])
