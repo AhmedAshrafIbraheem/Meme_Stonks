@@ -108,8 +108,6 @@ def Overview(ticker):
     #     print(f'{key} -- {value}')
 
 
-# def SMA(ticker):
-
 
 # A test function to test the functions inside the Ticker class
 # def test():

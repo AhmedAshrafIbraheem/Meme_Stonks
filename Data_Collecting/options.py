@@ -19,4 +19,3 @@ def options():
 
     driver.close()
     return options_data
-
