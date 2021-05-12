@@ -19,7 +19,9 @@
         </div>
         {% for ticker in data %}
         <div class="row">
-            <div class="two columns center_text"><h6 class="button">{{ticker[0]}}</h6></div>
+            <div class="two columns center_text">
+                <a href="/stock/{{ticker[0]}}" class="button">{{ticker[0]}}</a>
+            </div>
             <div class="one columns center_text"><h6>{{ticker[1]}}</h6></div>
             <div class="two columns center_text"><h6>{{ticker[2]}} $</h6></div>
             <div class="two columns center_text"><h6>{{ticker[3]}} $</h6></div>

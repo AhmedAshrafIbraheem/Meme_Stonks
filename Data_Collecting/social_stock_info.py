@@ -200,7 +200,7 @@ def twitter(ticker):
     df['subjectivity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[1])
     df.drop(df.columns[[0, 1, 2]], axis=1, inplace=True)
     ticker_dict = {ticker: [df['polarity'].mean(), df['subjectivity'].mean()]}
-    sleep(1)
+    
     return ticker_dict
 # END twitter
 

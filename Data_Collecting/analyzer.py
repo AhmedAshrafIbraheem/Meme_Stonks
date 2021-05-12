@@ -16,3 +16,16 @@ def analyze(ticker_info):
     scraped.update(social_info)
 
     return StockData(scraped)
+
+
+def analyze_option(ticker):
+
+    scraped = {"Symbol": ticker}
+
+    market_info = grab_stock_info(ticker)
+    scraped.update(market_info)
+
+    social_info = get_social_stock_info(ticker)
+    scraped.update(social_info)
+
+    return StockData(scraped)

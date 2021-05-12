@@ -1,6 +1,6 @@
 from time import sleep
 from scraper import scraper
-from analyzer import analyze
+from analyzer import analyze, analyze_option
 from store_guy import DatabaseInteraction
 from social_stock_info import google_trends_normalized
 from options import options
@@ -31,6 +31,11 @@ def stocks_controller():
 
 def options_controller():
     all_options = options()
+
+    for curr_option in all_options:
+        refined_option_data = analyze_option(curr_option[0])
+        DatabaseInteraction.get_instance().store_stock(refined_option_data)
+
     DatabaseInteraction.get_instance().store_options(all_options)
 
 

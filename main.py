@@ -83,7 +83,7 @@ def search_stock():
 
 
 def _ticker_validation(ticker: str) -> bool:
-    if len(ticker) < 3 or len(ticker) > 5:
+    if len(ticker) < 2 or len(ticker) > 5:
         return False
     return ticker.isalpha()
 
