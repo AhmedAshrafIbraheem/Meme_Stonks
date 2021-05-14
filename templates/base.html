@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/themes/introjs-dark.css">
+
     <!-- Chart.js library via CDN
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
@@ -22,7 +25,7 @@
 <body class="body_stuff">
     <div class="container">
         <a href="{{ url_for('index') }}">
-            <div class="row">
+            <div class="row" data-title="HOME" data-intro="Clicking on the header image will always take you home">
                 <div class="eight columns center_text text_color_green vertical_align_middle">
                     <br>
                     <h3>SLAMSTONKS</h3>
@@ -44,5 +47,7 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+    <script>introJs().addHints();</script>
 </body>
 

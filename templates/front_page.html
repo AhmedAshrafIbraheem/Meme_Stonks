@@ -5,15 +5,19 @@
                   border-left: 5px solid; background-color: #D6EAF8;
                   border-left-color: #3498DB; color: #3498DB; ">{{ message }}</p>
     {% endfor %}
-    <br>
     <div class="row">
-            <div class="twelve columns center_text">
+        <div class="twelve columns">
+            <a onclick="introJs().start()" href="#"><text style="color: gold">Help / Tutorial</text></a>
+        </div>
+    </div>
+    <div class="row">
+            <div class="twelve columns center_text" data-title="OPTIONS ACTIVITY" data-intro="This link will take you to a page that shows you unusual options activity" data-position="bottom">
                 <a href="/options" class="button">Check Unusual Options Activity</a>
             </div>
     </div>
     <br>
     <div class="row">
-        <div class="twelve columns">
+        <div class="twelve columns" data-title="SEARCH FOR A TICKER" data-intro="Search for any ticker of your choice!">
             <form style="text-align: center;" action="/search" method="POST">
                 <label style="color: #C1FFC1">Search for whatever Stock you think of just by typing its ticker</label> <br>
                 <input style="color: black" name="search" type="search" placeholder="Search" minlength="3" maxlength="5" required>
@@ -26,7 +30,7 @@
             <p><h4 class="centered_header text_color_green">TOP TEN SHORTED STOCK WATCHLIST</h4></p>
         </div>
     </div>
-    <div class="row border1">
+    <div class="row border1" data-title="TOP 10 SHORTED STOCKS" data-intro="Top 10 shorted stocks = most likely to make money!" data-position="right">
         <div class="row padding_bottom_1 text_color_red">
             <div class="three columns center_text text_underline">SYMBOL</div>
             <div class="three columns center_text text_underline">COMPANY NAME</div>
@@ -46,15 +50,14 @@
     </div>
     <div class="spacer_blank"></div>
     <div class="row border1">
-        <div class="twelve columns">
+        <div class="twelve columns" data-title="SCROLL THROUGH GRAPHS" data-intro="Use the arrows (center left/right) to cycle through different graphs" data-position="top">
             <!-- Slideshow container -->
             <div class="slideshow-container">
               <!-- Full-width images with number and caption text -->
               <div class="mySlides fade">
-                <div class="numbertext" style="color: lightslategrey">1 / 2</div>
-                    <br>
-                    <h5 class="section-title" style="color: green">Relative search engagement according to <b style="color: dodgerblue">G</b><b style="color: red">o</b><b style="color: yellow">o</b><b style="color: dodgerblue">g</b><b style="color: limegreen">l</b><b style="color: red">e</b>.com</h5>
-
+                <div style="color: lightslategrey">1 / 2</div>
+                    <b style="color: gold; float: right" data-hint="Graph 1: relative search volume among tickers<br />Graph 2: Twitter sentiment analysis:<br />+1 = pos.<br />-1 = neg." data-hintPosition="middle-left">( ? )</b>
+                  <h5 class="section-title" style="color: green">Relative search engagement according to <b style="color: dodgerblue">G</b><b style="color: red">o</b><b style="color: yellow">o</b><b style="color: dodgerblue">g</b><b style="color: limegreen">l</b><b style="color: red">e</b>.com</h5>
                     <canvas id="myChart"></canvas>
                     <script>
                     var canvas = document.getElementById('myChart');
@@ -399,10 +402,8 @@
                 </script>
               </div>
               <div class="mySlides fade">
-                <div class="numbertext" style="color: lightslategrey">2 / 2</div>
-                    <br>
+                <div style="color: lightslategrey">2 / 2</div>
                     <h5 class="section-title" style="color: green">Stock sentiment analysis comparison:</h5>
-
                     <canvas id="bar-chart"></canvas>
                     <script>
                         var canvas = document.getElementById('bar-chart');

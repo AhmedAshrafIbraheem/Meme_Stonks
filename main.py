@@ -30,7 +30,6 @@ def index():
     data = get_analysis()
     chart = get_chart_analysis()
     twitter_list_of_dicts = chart['twitter']
-    typee = type(twitter_list_of_dicts)
     temp_list = []
     priority_value_list = []
     for xx in twitter_list_of_dicts:
