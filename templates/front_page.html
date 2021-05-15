@@ -11,13 +11,13 @@
         </div>
     </div>
     <div class="row">
-            <div class="twelve columns center_text" data-title="OPTIONS ACTIVITY" data-intro="This link will take you to a page that shows you unusual options activity" data-position="bottom">
+            <div class="twelve columns center_text" data-intro="This link will take you to a page that shows you unusual options activity" data-position="bottom">
                 <a href="/options" class="button">Check Unusual Options Activity</a>
             </div>
     </div>
     <br>
     <div class="row">
-        <div class="twelve columns" data-title="SEARCH FOR A TICKER" data-intro="Search for any ticker of your choice!">
+        <div class="twelve columns"data-intro="Search for any ticker of your choice!">
             <form style="text-align: center;" action="/search" method="POST">
                 <label style="color: #C1FFC1">Search for whatever Stock you think of just by typing its ticker</label> <br>
                 <input style="color: black" name="search" type="search" placeholder="Search" minlength="3" maxlength="5" required>
@@ -30,9 +30,9 @@
             <p><h4 class="centered_header text_color_green">TOP TEN SHORTED STOCK WATCHLIST</h4></p>
         </div>
     </div>
-    <div class="row border1" data-title="TOP 10 SHORTED STOCKS" data-intro="Top 10 shorted stocks = most likely to make money!" data-position="right">
+    <div class="row border1" data-title="TOP 10 SHORTED STOCKS" data-intro="Top 10 shorted stocks = most likely to make money (and the only ones we look at)" data-position="right">
         <div class="row padding_bottom_1 text_color_red">
-            <div class="three columns center_text text_underline">SYMBOL</div>
+            <div class="three columns center_text text_underline" data-intro="Click the buttons below to go to a second page with much more detailed information on that ticker">SYMBOL</div>
             <div class="three columns center_text text_underline">COMPANY NAME</div>
             <div class="three columns center_text text_underline">FLOAT SHORTED</div>
             <div class="three columns center_text text_underline">SHORT INTEREST</div>
@@ -50,13 +50,23 @@
     </div>
     <div class="spacer_blank"></div>
     <div class="row border1">
+        <div class="row">
+            <div class="twelve columns" style="font-size: large">
+                <p style="padding-left: 20px; padding-right: 20px; padding-top: 10px">
+                    <b style="color: green">Graph 1</b>: All 10 stock tickers are checked for how much search volume they've had over the last week. The results are normalized so that they're relatable to each other.
+                </p>
+                <p style="padding-left: 20px; padding-right: 20px">
+                    <b style="color: green;">Graph 2</b>: We run a sentiment analysis algorithm on tweets talking about these tickers to determine how positive/negative the conversation is as well as how rational/irrational the conversation seems to be. The analysis graph below only compares how positive/negative the sentiment is.
+                </p>
+            </div>
+        </div>
         <div class="twelve columns" data-title="SCROLL THROUGH GRAPHS" data-intro="Use the arrows (center left/right) to cycle through different graphs" data-position="top">
             <!-- Slideshow container -->
             <div class="slideshow-container">
               <!-- Full-width images with number and caption text -->
               <div class="mySlides fade">
                 <div style="color: lightslategrey">1 / 2</div>
-                    <b style="color: gold; float: right" data-hint="Graph 1: relative search volume among tickers<br />Graph 2: Twitter sentiment analysis:<br />+1 = pos.<br />-1 = neg." data-hintPosition="middle-left">( ? )</b>
+                    <b style="color: gold; float: right" data-hint="Graph 1: relative search volume among tickers<br />Graph 2: Twitter sentiment analysis:<br />+1 = positive<br />-1 = negative" data-hintPosition="middle-left">( ? )</b>
                   <h5 class="section-title" style="color: green">Relative search engagement according to <b style="color: dodgerblue">G</b><b style="color: red">o</b><b style="color: yellow">o</b><b style="color: dodgerblue">g</b><b style="color: limegreen">l</b><b style="color: red">e</b>.com</h5>
                     <canvas id="myChart"></canvas>
                     <script>
@@ -416,7 +426,7 @@
                               {% endfor %} ],
                               datasets: [
                                 {
-                                  label: "Population (millions)",
+                                  label: "PRIORITY VALUE",
                                   backgroundColor: ["#FF0000", "#FF8000","#FFFF00","#00FF00","#00FFFF", "#0080FF", "#0000FF","#7F00FF","#FF007F","#7F7F7F"],
                                   data: [ {% for item in priority_value_list %}
                                     "{{ item }}",
@@ -428,7 +438,7 @@
                               legend: { display: false },
                               title: {
                                 display: true,
-                                text: 'NEGATIVE OPINION MAX  =  -1                    POSITIVE OPINION MAX  =  1',
+                                text: 'NEGATIVE OPINION MAX  =  -1                    POSITIVE OPINION MAX  =  +1',
                                 fontColor: 'white',
                               },
                               scales: {
@@ -436,8 +446,8 @@
                                     ticks: {
                                         autoSkip: false,
                                         fontColor: 'white',
-                                        suggestedMax: 0.5,
-                                        suggestedMin: -0.25,
+                                        suggestedMax: 0.35,
+                                        suggestedMin: -0.15,
                                     }
                                 }],
                                 xAxes: [{

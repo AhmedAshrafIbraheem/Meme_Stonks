@@ -17,7 +17,7 @@
         <div class="six columns">
             <b style="color: green">SLAMSTONKS' RECOMMENDATION:</b>
         </div>
-        <div class="six columns center_text">
+        <div class="six columns center_text" data-intro="Four potential recommendations:<br/>- IT'S A SLAMMER!!!<br/>- WATCH CLOSELY...<br/>- VERY UNLIKLEY...<br/>- DEAD END. MOVE ON">
             <button class="button-primary center_text">
                 {{ data.recommendation }}
             </button>     <b style="color: gold" data-hint="Four potential recommendations:<br/>- IT'S A SLAMMER!!!<br/>- WATCH CLOSELY...<br/>- VERY UNLIKLEY...<br/>- DEAD END. MOVE ON">( ? )</b>
@@ -224,7 +224,7 @@
         <div class="twelve columns">
             <h5 class="section-title center_text" style="color: green">Sentiment Analysis</h5>
             <p>
-                After calculating <b style="color: gold">{{ data.symbol }}'s</b> sentiment analysis on <b style="color: #1EAEDB">Twitter</b> conversations, we have concluded that <b style="color: gold">{{ data.symbol }}</b> is being talked about <span title="Priority: {{ data.priority }}" data-title="POSITIVE OR NEGATIVE?" data-intro="Four possible values for both positive and negative:<br/>- Extremely<br/>- Very<br/>- Basic<br/>- A little" data-position="left">{% if data.priority > 0 %}<u style="color: chartreuse">{{ data.priority_rec }}</u>{% else %}<u style="color: orangered">{{ data.priority_rec }}</u>{% endif %}</span> and the nature of the conversation leans towards being <span title="Subjectivity: {{ data.subjectivity }}" data-title="OBJECTIVE OR SUBJECTIVE?" data-intro="Four possible values:<br/>- Rational<br/>- Somewhat factual<br/>- Somewhat irrational<br/>- Irrational">{% if data.subjectivity > 0.49 %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% else %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% endif %}</span>.
+                After calculating <b style="color: gold">{{ data.symbol }}'s</b> sentiment analysis on <b style="color: #1EAEDB">Twitter</b> conversations, we have concluded that <b style="color: gold">{{ data.symbol }}</b> is being talked about <span title="Priority: {{ data.priority }}" data-intro="Four possible values for both positive and negative:<br/>- Extremely<br/>- Very<br/>- Basic<br/>- A little" data-position="left">{% if data.priority > 0 %}<u style="color: chartreuse">{{ data.priority_rec }}</u>{% else %}<u style="color: orangered">{{ data.priority_rec }}</u>{% endif %}</span> and the nature of the conversation leans towards being <span title="Subjectivity: {{ data.subjectivity }}" data-intro="Four possible values:<br/>- Rational<br/>- Somewhat factual<br/>- Somewhat irrational<br/>- Irrational">{% if data.subjectivity > 0.49 %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% else %}<u style="color: chartreuse">{{ data.subjectivity_rec }}</u>{% endif %}</span>.
             </p>
             <p class="center_text" style="color: lightslategrey">
                 - - - - - - - - - - - - - - - - - - - -
