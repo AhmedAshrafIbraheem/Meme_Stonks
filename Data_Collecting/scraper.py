@@ -1,13 +1,8 @@
-# SlamStonks: scraper.py
-# returns a list of lists after scraping data from www.marketwatch.com/tools/screener/short-interest
-# NEEDS: error checking
-
 from requests import get                # pulls html
 from re import search                   # regular expressions
 
 
-# TODO: Alex, scrape also the company name, short interest, float shorted and return it as a
-#  list of lists like [ [GME, Game .., 2323232, 56.34], [] ]
+# Returns a list of lists after scraping data from www.marketwatch.com/tools/screener/short-interest
 def scraper():
     # requests will use .get() to pull from marketwatch.com
     requests_get_short_html = get('http://www.marketwatch.com/tools/screener/short-interest')
@@ -52,4 +47,3 @@ def scraper():
         # end while
 
     return top_10_stocks
-# END scraper.py

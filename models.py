@@ -1,6 +1,4 @@
 from pymongo import MongoClient, DESCENDING
-
-# sudo systemctl start mongod
 from Data_Collecting.market_stock_info import grab_stock_info
 from Data_Collecting.social_stock_info import get_social_stock_info
 

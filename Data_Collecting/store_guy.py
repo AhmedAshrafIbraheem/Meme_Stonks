@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 from stock_class import StockData
-# sudo systemctl start mongod
 
 
 class DatabaseInteraction:

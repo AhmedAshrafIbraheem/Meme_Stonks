@@ -1,20 +1,15 @@
-# Alex - cleanup everything...
-#
 from time import sleep
 import pandas as pd
 from pytrends.request import TrendReq
 import tweepy
 import nltk
-from nltk.corpus import stopwords       #import stopwords
+from nltk.corpus import stopwords
 from textblob import Word, TextBlob
 import re
 
-############################################################
-#
-### AVERAGER ###############################################
-# Accepts a ticker dictionary that has hours per day and a
-# corresponding value. These hour values are averaged for
-# the day and returned in a dictionary.
+
+# Accepts a ticker dictionary that has hours per day and a corresponding value.
+# These hour values are averaged for the day and returned in a dictionary.
 def averager(ticker_dictionary):
     dictionary_to_return = {}  # loads nested_dictionary_return when full and empties for next ticker
     popping_from_ticker = ticker_dictionary.popitem()  # pops a tuple from into the var
@@ -38,16 +33,12 @@ def averager(ticker_dictionary):
     # print(dictionary_to_return)
 
     return dictionary_to_return
-# END averager
+# End of Averager
 
 
-############################################################
-# ......................................................................................................................
-### GOOGLE TRENDS NORMALIZED ###############################
 # pytrends, pandas (dataframe, timeframe)
-# returns a nested dictonary containing data needed for
-# comparing the relative frequency of tickers compared to
-# each other.
+# Returns a nested dictionary containing data needed for
+# comparing the relative frequency of tickers compared to each other.
 # Very helpful: https://towardsdatascience.com/telling-stories-with-google-trends-using-pytrends-in-python-a11e5b8a177
 def google_trends_normalized(top_10_stocks):
     # Only need to load this one time for following operations:
@@ -79,7 +70,6 @@ def google_trends_normalized(top_10_stocks):
         nested_dictionary.update({x: averager(ticker_only_dictionary)})
 
     # averaging out normalizing ticker across .......
-    #
     average_list = [0, 0, 0, 0, 0, 0, 0, 0]
     for x in nested_dictionary:
         for_loop_counter = 0
@@ -91,7 +81,7 @@ def google_trends_normalized(top_10_stocks):
 
     weird_list = []
 
-    for x in average_list:      # average the results
+    for x in average_list:  # average the results
         weird_list.append(x / 8.0)
 
     for_loop_counter = 0
@@ -127,31 +117,21 @@ def google_trends(ticker):
     # Only need to load this one time for following operations:
     pytrends = TrendReq()
 
-    # Will get back to the commented-out code below after MVP:
-    # # Get Google Hot Trends data
-    # today_searches_df = pytrends.today_searches()
-    # print(today_searches_df.to_string())
-
     kw_list = [ticker]
-    # check pytrends documentation as well as the embedded code snippet from
-    # trends.google.com to find proper pararmeters/formatting
     pytrends.build_payload(kw_list, cat=0, timeframe='now 7-d', geo='US', gprop='')
     interest_over_time_df = pytrends.interest_over_time()
-    #print(interest_over_time_df.head())        # useful for error testing
+    # print(interest_over_time_df.head())        # useful for error testing
 
-    # prepping variables for the coming while loop that uses them. We need to get the current_date before we can
-    # cycle through the dictionary. current_date is critical to successful execution.
-    ticker_only_dictionary = interest_over_time_df.to_dict().get(ticker) # grabs the ticker dictionary from the dataframe
+    # prepping variables for the coming while loop that uses them.
+    # We need to get the current_date before we can cycle through the dictionary.
+    # current_date is critical to successful execution.
+    ticker_only_dictionary = interest_over_time_df.to_dict().get(ticker)
+    # grabs the ticker dictionary from the dataframe
     # print(interest_over_time_df.to_string())
     return averager(ticker_only_dictionary)
 # END google_trends
 
 
-############################################################
-# ...
-### TWITTER ################################################
-############################################################
-# ...
 def twitter(ticker):
     # login stuff:
     consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
@@ -187,10 +167,10 @@ def twitter(ticker):
         preprocessed_tweet = " ".join(Word(word).lemmatize() for word in preprocessed_tweet.split())
         return preprocessed_tweet
 
-    custom_stopwords = ['RT']       # add to if necessary
+    custom_stopwords = ['RT']  # add to if necessary
     query = tweepy.Cursor(api.search,
-                  q=ticker,
-                  lang="en",).items(200)        # removed since...
+                          q=ticker,
+                          lang="en", ).items(200)  # removed since...
     tweets = [{'Tweets': tweet.text, 'Timestamp': tweet.created_at} for tweet in query]
     df = pd.DataFrame.from_dict(tweets)
     df['Processed Tweet'] = df['Tweets'].apply(lambda x: preprocess_tweets(x, custom_stopwords))
@@ -200,23 +180,10 @@ def twitter(ticker):
     df['subjectivity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[1])
     df.drop(df.columns[[0, 1, 2]], axis=1, inplace=True)
     ticker_dict = {ticker: [df['polarity'].mean(), df['subjectivity'].mean()]}
-    
+
     return ticker_dict
 # END twitter
 
 
 def get_social_stock_info(ticker):
     return {'twitter': twitter(ticker), 'google': google_trends(ticker)}
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-#if __name__ == '__main__':
-    #print(google_trends_normalized(top_10_stocks))
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
-# END social_stock_info.py
