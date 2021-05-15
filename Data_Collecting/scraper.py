@@ -2,6 +2,8 @@ from requests import get                # pulls html
 from re import search                   # regular expressions
 
 
+# SCRAPER()
+# reguests, regex
 # Returns a list of lists after scraping data from www.marketwatch.com/tools/screener/short-interest
 def scraper():
     # requests will use .get() to pull from marketwatch.com
@@ -47,3 +49,4 @@ def scraper():
         # end while
 
     return top_10_stocks
+# END scraper

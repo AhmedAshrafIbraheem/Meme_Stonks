@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 from textblob import Word, TextBlob
 import re
 
-
+# AVERAGER()
 # Accepts a ticker dictionary that has hours per day and a corresponding value.
 # These hour values are averaged for the day and returned in a dictionary.
 def averager(ticker_dictionary):
@@ -29,13 +29,11 @@ def averager(ticker_dictionary):
             counter_for_avg = 1
         if len(ticker_dictionary) == 0:
             dictionary_to_return.update({current_date: counter / counter_for_avg})
-
     # print(dictionary_to_return)
-
     return dictionary_to_return
 # End of Averager
 
-
+# GOOGLE_TRENDS_NORMALIZED()
 # pytrends, pandas (dataframe, timeframe)
 # Returns a nested dictionary containing data needed for
 # comparing the relative frequency of tickers compared to each other.
@@ -79,7 +77,7 @@ def google_trends_normalized(top_10_stocks):
                 average_list[for_loop_counter] += nested_dictionary[x][xx]
                 for_loop_counter += 1
 
-    weird_list = []
+    weird_list = []     # cuz bug hunting, that's why! (the name, not the function)
 
     for x in average_list:  # average the results
         weird_list.append(x / 8.0)
@@ -112,7 +110,9 @@ def google_trends_normalized(top_10_stocks):
     return nested_dictionary
 # END google_trends_normalized
 
-
+# GOOGLE_TRENDS()
+# pytrends, pandas
+# This does what normalized does but for one ticker only.
 def google_trends(ticker):
     # Only need to load this one time for following operations:
     pytrends = TrendReq()
@@ -131,7 +131,10 @@ def google_trends(ticker):
     return averager(ticker_only_dictionary)
 # END google_trends
 
-
+# TWITTER()
+# tweepy, pandas, re, nltk, textblob
+# Gathers tweets for a ticker and then performs sentiment analysis on the tweets with nltk and textblob.
+# Data is returned in a dictionary.
 def twitter(ticker):
     # login stuff:
     consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
@@ -184,6 +187,6 @@ def twitter(ticker):
     return ticker_dict
 # END twitter
 
-
+# for controller.py and/or other controllers
 def get_social_stock_info(ticker):
     return {'twitter': twitter(ticker), 'google': google_trends(ticker)}
