@@ -1,7 +1,7 @@
 from requests import get
 from datetime import datetime
 
-
+# Pulls all the individual API calls and groups them together into one dictionary, which is then accessed by the database located in controller.py.
 def grab_stock_info(ticker):
     info = dict()
     intraday = Intraday(ticker)
