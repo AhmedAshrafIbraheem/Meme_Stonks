@@ -133,8 +133,10 @@ class StockInfo:
         elif -0.49 > self.priority > -0.75:
             self.priority_rec = 'VERY  NEGATIVELY'
             self.counter += 1
-        else:
+        elif self.priority < -0.75:
             self.priority_rec = 'EXTREMELY NEGATIVELY'
+        else:
+            self.priority_rec = 'NEGATIVELY'
 
         self.subjectivity_rec = ''
         if self.subjectivity > 0.74:
