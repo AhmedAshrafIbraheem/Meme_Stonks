@@ -7,8 +7,6 @@ app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
-# TODO: Mohamed, Implement error pages with skeleton. Found in templates/errors
-
 
 @app.errorhandler(403)
 def forbidden(error):
@@ -38,7 +36,8 @@ def index():
         priority_value_list.append(xx[0])
     return render_template('front_page.html', data=data, legend=chart['legend'], the_date=chart['the_date'],
                            tickers=chart['tickers'], nested_dictionaries=chart['nested_dictionaries'],
-                           twitter=chart['twitter'], twitter_dict_of_dicts=twitter_list_of_dicts, priority_value_list=priority_value_list)
+                           twitter=chart['twitter'], twitter_dict_of_dicts=twitter_list_of_dicts,
+                           priority_value_list=priority_value_list)
 
 
 @app.route('/options', methods=['GET'])

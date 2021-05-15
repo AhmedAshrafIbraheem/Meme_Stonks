@@ -15,19 +15,8 @@ def grab_stock_info(ticker):
 
     return info
 
-    # for key, value in info.items():
-    #     print(f'{key} -- {value}')
 
-    # info = {"price": 23}
-    # kol = {"volume": 43}
-    # info.update(kol)
-    # info {"price": 23, "volume": 43}
-
-
-# # @Param: None
-# # API call that fetches the intraday(1 Min, 5 Min, 15 Min, 30 Min, 60 Min) Open High Low Close and
-# # Volume for a given Ticker and*Includes extended trading hours*
-# # @Return: Python dictionary
+# API call that fetches the intraday (1 Min, 5 Min, 15 Min, 30 Min, 60 Min) Open High Low Close and
 def Intraday(ticker):
     url = f'https://api.marketstack.com/v1/intraday?access_key=61578059aad857bacd9150dc716b8c82&symbols={ticker}&interval=1min&limit=500'
     response = get(url)
@@ -43,6 +32,7 @@ def Intraday(ticker):
                 intraday.append(curr)
         return intraday
 
+    # Handling the case when ticker is not found
     url = f'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={ticker}&interval=1min&apikey=75NGNLOY2P6P3HT4'
     response = get(url)
     info = response.json()
@@ -61,13 +51,12 @@ def Intraday(ticker):
 
         return intraday
     return None
+
     # for key, value in final.items():
     #     print(f'{key} -- {value}')
 
 
-# @Param: None
 # API call that fetches the Daily Open High Low Close and Volume for a given Ticker
-# @Return: Python dictionary
 def Daily(ticker):
     url = f'https://api.marketstack.com/v1/eod?access_key=61578059aad857bacd9150dc716b8c82&symbols={ticker}'
     response = get(url)
@@ -87,13 +76,7 @@ def Daily(ticker):
     return daily
 
 
-    # for key, value in info.items():
-    #     print(f'{key} -- {value}')
-
-
-# @Param: None
 # API call that fetches the fundamental details/company overview for a given Ticker
-# @Return: Python dictionary
 def Overview(ticker):
     url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker}&apikey=75NGNLOY2P6P3HT4'
     response = get(url)
@@ -103,16 +86,3 @@ def Overview(ticker):
         return None
 
     return overview
-
-    # for key, value in overview.items():
-    #     print(f'{key} -- {value}')
-
-
-
-# A test function to test the functions inside the Ticker class
-# def test():
-#     # Intraday('LGHL')
-#     # Daily('AAPL')
-#     # Overview('LGHL')
-#     # Quote('LGHL')
-#     # RealTimeData('AAPL')
